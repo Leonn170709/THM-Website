@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Highway Men</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap"
+      rel="stylesheet">
+    <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --glass-bg: rgba(255,255,255,0.07);
+      --glass-border: rgba(255,255,255,0.18);
+      --glass-highlight: rgba(255,255,255,0.25);
+      --accent: #4af0c4;
+      --accent2: #a78bfa;
+      --accent3: #f472b6;
+      --dark: #060a10;
+      --text: #e2eaf5;
+      --muted: rgba(226,234,245,0.5);
+      --blur: 18px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    strong { font-weight: 600; letter-spacing: 0.01em; }
+
+    /* ── BACKGROUND ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-layer::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(74,240,196,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 80%, rgba(167,139,250,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(244,114,182,0.06) 0%, transparent 60%);
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: float 12s ease-in-out infinite;
+    }
+    .orb-1 { width: 500px; height: 500px; top: -100px; left: -150px; background: rgba(74,240,196,0.08); animation-delay: 0s; }
+    .orb-2 { width: 400px; height: 400px; top: 40%; right: -100px; background: rgba(167,139,250,0.1); animation-delay: -4s; }
+    .orb-3 { width: 350px; height: 350px; bottom: -50px; left: 30%; background: rgba(244,114,182,0.07); animation-delay: -8s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-40px) scale(1.05); }
+    }
+
+    /* ── GLASS MIXIN ── */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-highlight);
+      border-left-color: var(--glass-highlight);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2rem;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(6,10,16,0.4);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: background 0.3s;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 36px; filter: drop-shadow(0 0 8px rgba(74,240,196,0.5)); }
+    .nav-logo span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.1em;
+      color: var(--text);
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 8rem;
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+    .hero-logo {
+      width: 100%;
+      max-width: 850px;
+      height: auto;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 60px rgba(74,240,196,0.25));
+      opacity: 0;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      /* Soften hard edges and create a subtle faded effect */
+      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+      animation: bannerFade 1.2s ease forwards 0.4s, logoPulse 6s ease-in-out infinite 1.6s;
+    }
+    @keyframes bannerFade {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 0.7; transform: translateY(0) scale(1); }
+    }
+    @keyframes logoPulse {
+      0%, 100% { filter: drop-shadow(0 0 40px rgba(74,240,196,0.2)); }
+      50% { filter: drop-shadow(0 0 80px rgba(74,240,196,0.45)); }
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      line-height: 0.9;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, #fff 30%, var(--accent) 70%, var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-top: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+    .hero-stats {
+      display: flex; gap: 2rem; margin-top: 3rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1s;
+    }
+    .stat-card {
+      padding: 1.2rem 2rem;
+      border-radius: 16px;
+      text-align: center;
+      min-width: 120px;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; margin-top: 3rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.1s;
+    }
+    .btn {
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #060a10;
+      font-weight: 700;
+      box-shadow: 0 0 30px rgba(74,240,196,0.4);
+    }
+    .btn-primary:hover { box-shadow: 0 0 50px rgba(74,240,196,0.7); transform: translateY(-2px); }
+    .btn-ghost {
+      background: var(--glass-bg);
+      color: var(--text);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeUp 0.8s ease forwards 1.5s;
+    }
+    .scroll-hint span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scroll-mouse {
+      width: 20px; height: 32px;
+      border: 1.5px solid var(--muted);
+      border-radius: 10px;
+      position: relative;
+    }
+    .scroll-dot {
+      width: 2px; height: 5px;
+      background: var(--accent);
+      position: absolute; top: 6px; left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+      animation: scrollAnim 2s ease-in-out infinite;
+    }
+    @keyframes scrollAnim {
+      0% { opacity: 0; transform: translateX(-50%) translateY(0); }
+      20% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative; z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .about-text p strong { color: var(--text); font-weight: 600; }
+    .about-img-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .about-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(6,10,16,0.7) 0%, transparent 50%);
+    }
+    .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── TIMELINE ── */
+    .timeline { margin-top: 3rem; position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 20px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3), transparent);
+    }
+    .timeline-item {
+      padding: 0 0 2.5rem 4rem;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 12px; top: 6px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 15px rgba(74,240,196,0.6);
+    }
+    .tl-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+    .tl-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+    .tl-body {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── MAP ── */
+    #map-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 2rem 6rem;
+      position: relative; z-index: 1;
+    }
+    .map-wrap {
+      border-radius: 24px;
+      overflow: hidden;
+      margin-top: 2rem;
+      border: 1px solid var(--glass-border);
+      position: relative;
+    }
+    .map-wrap::before {
+      content: 'NETHER HIGHWAY MAP — 6B6T — AS OF 02.03.2026';
+      position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.5);
+      z-index: 2;
+      white-space: nowrap;
+    }
+    .map-wrap img {
+      width: 100%;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .map-wrap:hover img { transform: scale(1.015); }
+
+    /* ── KITBOT ── */
+    .kitbot-card {
+      border-radius: 24px;
+      padding: 2.5rem;
+      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .kitbot-card::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(167,139,250,0.15) 0%, transparent 70%);
+    }
+    .kitbot-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+    }
+    @media (max-width: 600px) { .kitbot-inner { grid-template-columns: 1fr; } }
+    .kitbot-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+      background: linear-gradient(90deg, var(--accent2), var(--accent3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .kitbot-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 0.75rem;
+    }
+    .kitbot-meta {
+      display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.25rem;
+    }
+    .meta-chip {
+      padding: 0.3rem 0.9rem;
+      border-radius: 50px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--glass-border);
+      color: var(--muted);
+    }
+    .meta-chip.accent { border-color: var(--accent); color: var(--accent); }
+    .meta-chip.purple { border-color: var(--accent2); color: var(--accent2); }
+    .kitbot-img {
+      width: 160px; height: 160px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 30px rgba(167,139,250,0.4));
+      animation: rotate 20s linear infinite;
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── MEMBERS ── */
+    .members-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+    .member-tag {
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      transition: all 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .member-tag.leader {
+      background: rgba(74,240,196,0.12);
+      border: 1px solid rgba(74,240,196,0.35);
+      color: var(--accent);
+    }
+    .member-tag.member {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+    }
+    .member-tag:hover { transform: translateY(-2px); border-color: var(--accent2); color: var(--accent2); }
+    .member-legend {
+      display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .legend-dot.leader { background: var(--accent); }
+    .legend-dot.member { background: var(--muted); }
+
+    /* ── RULE ── */
+    .rule-card {
+      border-radius: 24px;
+      padding: 2.5rem;
+      margin-top: 2rem;
+    }
+    .rule-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 8rem;
+      line-height: 1;
+      color: rgba(74,240,196,0.08);
+      position: absolute;
+      right: 2rem; top: 1rem;
+      pointer-events: none;
+      user-select: none;
+    }
+    .rule-card { position: relative; }
+    .rule-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--accent);
+    }
+    .rule-body {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin-top: 1rem;
+    }
+    .rule-benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .benefit {
+      padding: 1rem;
+      border-radius: 12px;
+      background: rgba(74,240,196,0.05);
+      border: 1px solid rgba(74,240,196,0.15);
+      font-size: 0.83rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .benefit strong { color: var(--accent); display: block; margin-bottom: 0.3rem; font-family: 'Syne'; font-weight: 700; }
+
+    /* ── WATCHMEN ── */
+    .watchmen-card {
+      border-radius: 24px;
+      padding: 2.5rem;
+      margin-top: 2rem;
+      border-left: 3px solid var(--accent2);
+    }
+    .watchmen-card .wt { color: var(--accent2); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--glass-border);
+    }
+    footer p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      line-height: 2;
+    }
+    footer strong { color: var(--accent); }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── LIQUID GLASS SHIMMER ON HOVER ── */
+    .glass-hover {
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-hover::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -60%;
+      width: 40%; height: 200%;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+      transform: skewX(-15deg);
+      transition: left 0.6s ease;
+      pointer-events: none;
+    }
+    .glass-hover:hover::after { left: 130%; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--glass-border), transparent);
+      margin: 0 2rem;
+    }
+  </style>
+  </head>
+  <body>
+
+    <!-- Background -->
+    <div class="bg-layer">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Nav -->
+    <nav>
+      <a href="#" class="nav-logo">
+        <img src="images/THM2-transparent.png" alt="THM">
+        <span>THM</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#highways">Highways</a></li>
+        <li><a href="#kitbot">Kitbot</a></li>
+        <li><a href="#members">Members</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero -->
+    <div id="hero">
+      <p class="hero-eyebrow">6b6t · Minecraft Anarchy · Est. Oct 2024</p>
+      <img src="images/THM-Banner.png" alt="The Highway Men Banner"
+        class="hero-logo">
+      <h1 class="hero-title">The Highway Men</h1>
+      <p class="hero-sub">The dominant highway clan on 6b6t. Building the
+        infrastructure that connects the world — one block at a time.</p>
+      <div class="hero-stats">
+        <div class="stat-card glass glass-hover">
+          <div class="stat-num">3k</div>
+          <div class="stat-label">Discord Members</div>
+        </div>
+        <div class="stat-card glass glass-hover">
+          <div class="stat-num">100K</div>
+          <div class="stat-label">Daily Blocks</div>
+        </div>
+        <div class="stat-card glass glass-hover">
+          <div class="stat-num">7mo</div>
+          <div class="stat-label">To 500 Members</div>
+        </div>
+        <div class="stat-card glass glass-hover">
+          <div class="stat-num">5W</div>
+          <div class="stat-label">The Rule</div>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a href="#about" class="btn btn-primary">Explore</a>
+        <a href="#members" class="btn btn-ghost">Members</a>
+      </div>
+      <div class="scroll-hint">
+        <div class="scroll-mouse">
+          <div class="scroll-dot"></div>
+        </div>
+        <span>Scroll</span>
+      </div>
+    </div>
+
+    <!-- About -->
+    <section id="about">
+      <p class="section-tag reveal">Who We Are</p>
+      <h2 class="section-title reveal">Building the <br>Nether Grid</h2>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p><strong>The Highway Men (THM)</strong> is the major highway clan on
+            the anarchic Minecraft server <strong>6b6t</strong>, founded on
+            October 19, 2024 by <strong>mingailas</strong>. After the
+            disbandment of the Highway Extension Group, THM stepped up to fill
+            the void.</p>
+          <p>What started as a small group focused on the Nether dimension
+            quickly grew into the largest highway infrastructure organization on
+            the server. At peak activity, THM workers cleared over
+            <strong>100,000 blocks daily</strong> on average.</p>
+          <p>7 months after its creation, the clan reached <strong>500 Discord
+              members</strong> with 10–20 active workers consistently pushing
+            highways toward the world border.</p>
+          <p>THM established the universal <strong>"5 Blocks Wide" rule</strong>
+            on Nether highways in March 2025, a standard now followed across the
+            server for efficient, maintainable highway construction.</p>
+        </div>
+        <div class="about-img-wrap reveal">
+          <img src="images/THM2-transparent.png"
+            alt="THM Logo Transparent White"
+            style="object-fit:contain; background: rgba(6,10,16,0.5); padding: 2rem;">
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- History -->
+    <section id="history">
+      <p class="section-tag reveal">Timeline</p>
+      <h2 class="section-title reveal">History</h2>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <p class="tl-date">October 19, 2024</p>
+          <h3 class="tl-title">Foundation — "Moon"</h3>
+          <p class="tl-body">Player <strong>mingailas</strong> founded a clan
+            called Moon. A few days later it was rebranded to <em>The Highway
+              Men</em> after realizing the potential in highway work. First
+            members included CapyKing10, CaT_345, Volizray, xm4nn_, and
+            others.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <p class="tl-date">Late 2024</p>
+          <h3 class="tl-title">Rapid Expansion</h3>
+          <p class="tl-body">Focusing on the Nether dimension, the group cleared
+            100K blocks daily on average. THM became the de facto successor to
+            the disbanded Highway Extension Group, gaining rapid recognition on
+            the server.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <p class="tl-date">February 2025</p>
+          <h3 class="tl-title">TNT Dupe Discovery</h3>
+          <p class="tl-body">Core member <strong>Ooranges</strong> published a
+            video showcasing a TNT duplication exploit. The dupe was patched
+            roughly 12 hours after going public — one of the shortest-lived
+            dupes in 6b6t history.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <p class="tl-date">March 2025</p>
+          <h3 class="tl-title">The 5 Blocks Wide Rule</h3>
+          <p class="tl-body">Negotiations between THM and The Watchmen resulted
+            in the universal adoption of the "5 Blocks Wide" standard on all
+            Nether highways. This became a defining moment in organized 6b6t
+            infrastructure.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <p class="tl-date">Mid 2025</p>
+          <h3 class="tl-title">500 Discord Members</h3>
+          <p class="tl-body">7 months after founding, the THM Discord hit 500
+            members. 10–20 active workers were consistently extending highways,
+            solidifying THM's dominance in 6b6t highway infrastructure.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <p class="tl-date">2025–Present</p>
+          <h3 class="tl-title">Highway Sabotage Collective (HSC)</h3>
+          <p class="tl-body">The Highway Sabotage Collective emerged as the
+            primary antagonist group, blocking several thousand blocks at a time
+            for weeks. THM persisted and continued pushing highways toward the
+            world border regardless.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Map -->
+    <div id="highways" id="map-section">
+      <section style="padding-bottom: 0;">
+        <p class="section-tag reveal">Infrastructure</p>
+        <h2 class="section-title reveal">Nether Highway Network</h2>
+        <p
+          style="color: var(--muted); font-size: 0.9rem; line-height: 1.7; max-width: 600px;"
+          class="reveal">The Nether highway grid as maintained and extended by
+          THM. Each path represents thousands of hours of work by dedicated
+          members pushing toward the world border.</p>
+      </section>
+      <div
+        style="max-width: 1100px; margin: 0 auto; padding: 1rem 2rem 6rem; position: relative; z-index: 1;">
+        <div class="map-wrap glass reveal">
+          <img src="images/highway-map.png" alt="6b6t Nether Highway Map">
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Kitbot -->
+    <section id="kitbot">
+      <p class="section-tag reveal">Tools</p>
+      <h2 class="section-title reveal">Kitbot</h2>
+      <div class="kitbot-card glass glass-hover reveal">
+        <div class="kitbot-inner">
+          <div>
+            <p class="kitbot-title">Kitbot</p>
+            <p class="kitbot-desc">
+              THM's custom Discord bot, originally built and maintained by
+              community member <strong>Ooranges</strong>. It has since been
+              taken over and actively maintained by
+              <strong>Leon_170709</strong>. Kitbot powers THM's Discord server
+              with automation, kit distribution, and utility features for
+              members and highway workers.
+            </p>
+            <div class="kitbot-meta">
+              <span class="meta-chip accent">Current Maintainer:
+                Leon_170709</span>
+              <span class="meta-chip purple">Original Dev: Ooranges</span>
+              <span class="meta-chip">Discord Bot</span>
+              <span class="meta-chip">Node.js</span>
+            </div>
+          </div>
+          <img src="images/kitbot-logo.png" alt="Kitbot Icon"
+            class="kitbot-img">
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 5 Blocks Wide Rule -->
+    <section id="rule">
+      <p class="section-tag reveal">Standard</p>
+      <h2 class="section-title reveal">The 5 Blocks Wide Rule</h2>
+      <div class="rule-card glass glass-hover reveal">
+        <div class="rule-number">5</div>
+        <p class="rule-title">Universal Highway Standard</p>
+        <p class="rule-body">
+          Negotiated between THM and The Watchmen in March 2025, the 5 Blocks
+          Wide Rule became the enforced highway standard on all main Nether
+          highways. Controversial at first, it quickly proved its value in
+          practice.
+        </p>
+        <div class="rule-benefits">
+          <div class="benefit"><strong>Cost Efficiency</strong>5 blocks per unit
+            is cheaper than 6, allowing faster extension to the world
+            border.</div>
+          <div class="benefit"><strong>Griefing Resistance</strong>Harder to
+            sabotage than 4-wide, but easier to restore than 6-wide.</div>
+          <div class="benefit"><strong>Navigation</strong>A clean center-line
+            for elytra and foot travel — fits 2 players side by side.</div>
+          <div class="benefit"><strong>Compatibility</strong>Works with Meteor
+            Client tools like HIG, which support widths up to 6 blocks.</div>
+          <div class="benefit"><strong>Alignment</strong>Odd-numbered width
+            makes lining up easier than even-numbered highways.</div>
+          <div class="benefit"><strong>Consistency</strong>Prevents constant
+            width changes along long stretches of highway.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Watchmen Alliance -->
+    <section id="alliances">
+      <p class="section-tag reveal">Alliances</p>
+      <h2 class="section-title reveal">The Watchmen</h2>
+      <div class="watchmen-card glass reveal">
+        <h3
+          style="font-family: 'Bebas Neue'; font-size: 1.8rem; color: var(--accent2); margin-bottom: 0.75rem;">Partnership</h3>
+        <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.8;">
+          <strong class="wt">The Watchmen</strong> — founded by
+          <strong>beast_machine</strong> — arrived on 6b6t in early 2025 after a
+          long history on 2b2t. They partnered with THM following the
+          establishment of the 5 Blocks Wide Rule, contributing massively to
+          highway expansion: they expanded the Nether highways more than any
+          other group in 6b6t's history, constructed 23 member bases, and hosted
+          giveaways with over 20,000 kits.
+        </p>
+        <p
+          style="color: var(--muted); font-size: 0.9rem; line-height: 1.8; margin-top: 0.75rem;">
+          The Watchmen officially disbanded on <strong
+            style="color: var(--accent3);">April 5th, 2026</strong>.
+        </p>
+        <div
+          style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.25rem;">
+          <span class="meta-chip purple">Partner Clan</span>
+          <span class="meta-chip">6b6t</span>
+          <span class="meta-chip"
+            style="color: var(--accent3); border-color: var(--accent3);">Disbanded
+            Apr 5, 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Members -->
+    <section id="members">
+      <p class="section-tag reveal">Roster</p>
+      <h2 class="section-title reveal">Members</h2>
+      <div class="member-legend reveal">
+        <div class="legend-item"><div class="legend-dot leader"></div>
+          Leader</div>
+        <div class="legend-item"><div class="legend-dot member"></div>
+          Member</div>
+      </div>
+      <div class="members-grid reveal">
+        <!-- Leaders -->
+        <!--<a href="players/xm4nn_.html" class="member-tag leader">xm4nn_</a>-->
+        <a href="players/Ryazor.html" class="member-tag leader">Ryazor</a>
+        <a href="players/Kyr0zen.html" class="member-tag leader">Kyr0zen</a>
+        <a href="players/Leon_170709.html" class="member-tag leader">Leon_170709</a>
+        <!-- Members -->
+        <a href="players/FantasticJB.html" class="member-tag member">FantasticJB</a>
+        <a href="players/Volizray.html" class="member-tag member">Volizray</a>
+        <a href="players/fainecio.html" class="member-tag member">fainecio</a>
+        <a href="players/particl3s.html" class="member-tag member">particl3s</a>
+        <a href="players/Quinnnn_n.html" class="member-tag member">Quinnnn_n</a>
+        <a href="players/Greenpyxl.html" class="member-tag member">Greenpyxl</a>
+        <a href="players/Wide_cat.html" class="member-tag member">Wide_cat</a>
+        <a href="players/FloppaDude.html" class="member-tag member">FloppaDude</a>
+        <a href="players/Zitrone30.html" class="member-tag member">Zitrone30</a>
+        <a href="players/Ooranges.html" class="member-tag member">Ooranges</a>
+        <a href="players/AlphaCrystal.html" class="member-tag member">AlphaCrystal</a>
+        <a href="players/Vladimir_Lem0n.html" class="member-tag member">Vladimir_Lem0n</a>
+        <a href="players/Evrality.html" class="member-tag member">Evrality</a>
+        <a href="players/nintoaster1.html" class="member-tag member">nintoaster1</a>
+        <a href="players/D_Plex_Legend.html" class="member-tag member">D_Plex_Legend</a>
+        <a href="players/GoShKo.html" class="member-tag member">_GoShKo_</a>
+        <a href="players/NexLordMax.html" class="member-tag member">NexLordMax</a>
+        <a href="players/Zgladiscool.html" class="member-tag member">Zgladiscool</a>
+        <a href="players/VeryHradName.html" class="member-tag member">VeryHradName</a>
+        <a href="players/Moosipall2.html" class="member-tag member">Moosipall2</a>
+        <a href="players/Hejky420.html" class="member-tag member">Hejky420</a>
+        <a href="players/risabhpro.html" class="member-tag member">risabhpro</a>
+        <a href="players/KudoBelle.html" class="member-tag member">KudoBelle</a>
+        <a href="players/Dazz005.html" class="member-tag member">Dazz005</a>
+        <a href="players/aetherf.html" class="member-tag member">aetherf</a>
+        <a href="players/RescueRabbit.html" class="member-tag member">RescueRabbit</a>
+        <a href="players/misakplak.html" class="member-tag member">misakplak</a>
+        <a href="players/qqzcw.html" class="member-tag member">qqzcw</a>
+        <a href="players/x1no2.html" class="member-tag member">x1no2</a>
+        <a href="players/SloppiPapi00.html" class="member-tag member">SloppiPapi00</a>
+        <a href="players/Jetsjet.html" class="member-tag member">Jetsjet</a>
+        <a href="players/NotAPro1081.html" class="member-tag member">NotAPro1081</a>
+        <a href="players/NatetheDawg.html" class="member-tag member">NatetheDawg</a>
+        <a href="players/D4msss.html" class="member-tag member">D4msss</a>
+        <a href="players/mingailas.html" class="member-tag member">mingailas</a>
+        <a href="players/CapyKing10.html" class="member-tag member">CapyKing10</a>
+        <a href="players/CaT_345.html" class="member-tag member">CaT_345</a>
+        <span class="member-tag member">& more...</span>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p><strong>THE HIGHWAY MEN</strong></p>
+      <p>6b6t · Minecraft Anarchy Server · Est. October 19, 2024</p>
+      <p style="margin-top: 0.5rem;">Leaders: <strong>xm4nn_</strong> ·
+        <strong>Ryazor</strong> · <strong>Kyr0zen</strong> ·
+        <strong>Leon_170709</strong></p>
+      <p style="margin-top: 1rem; font-size: 0.55rem; opacity: 0.4;">THM · THE
+        HIGHWAY MEN · 6B6T · ALL ROADS LEAD TO THM</p>
+    </footer>
+
+    <script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Stagger children if needed
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav opacity on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.background = 'rgba(6,10,16,0.85)';
+    } else {
+      nav.style.background = 'rgba(6,10,16,0.4)';
+    }
+  });
+
+  // Smooth stagger for member grid
+  document.querySelectorAll('.members-grid .member-tag').forEach((tag, i) => {
+    tag.style.transitionDelay = `${i * 0.03}s`;
+    tag.style.opacity = '0';
+    tag.style.transform = 'translateY(10px)';
+    tag.style.transition = 'opacity 0.4s ease, transform 0.4s ease, color 0.2s, border-color 0.2s, box-shadow 0.2s';
+  });
+  const memberObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.member-tag').forEach(tag => {
+          tag.style.opacity = '1';
+          tag.style.transform = 'translateY(0)';
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+  const grid = document.querySelector('.members-grid');
+  if (grid) memberObserver.observe(grid);
+</script>
+  </body>
+</html>
