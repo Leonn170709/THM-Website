@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leon_170709 - THM Member</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --glass-bg: rgba(255,255,255,0.07);
+      --glass-border: rgba(255,255,255,0.18);
+      --glass-highlight: rgba(255,255,255,0.25);
+      --accent: #4af0c4;
+      --accent2: #a78bfa;
+      --accent3: #f472b6;
+      --accent4: #72f47f;
+      --dark: #060a10;
+      --text: #e2eaf5;
+      --muted: rgba(226,234,245,0.5);
+      --blur: 18px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--text); font-family: 'Syne', sans-serif; overflow-x: hidden; min-height: 100vh; }
+    strong { font-weight: 600; color: #fff; letter-spacing: 0.03em; text-shadow: 0 0 10px rgba(255,255,255,0.15); }
+
+    .bg-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .bg-layer::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(74,240,196,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 80%, rgba(167,139,250,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(244,114,182,0.06) 0%, transparent 60%);
+    }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); animation: float 12s ease-in-out infinite; }
+    .orb-1 { width: 500px; height: 500px; top: -100px; left: -150px; background: rgba(74,240,196,0.08); }
+    .orb-2 { width: 400px; height: 400px; top: 40%; right: -100px; background: rgba(167,139,250,0.1); animation-delay: -4s; }
+    .orb-3 { width: 350px; height: 350px; bottom: -50px; left: 30%; background: rgba(244,114,182,0.07); animation-delay: -8s; }
+    @keyframes float { 0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-40px) scale(1.05);} }
+
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-highlight); border-left-color: var(--glass-highlight);
+    }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2rem; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(6,10,16,0.4);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--glass-border); transition: background 0.3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo img { height: 36px; filter: drop-shadow(0 0 8px rgba(74,240,196,0.5)); }
+    .nav-logo span { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.1em; color: var(--text); }
+    .nav-back { display: flex; align-items: center; gap: 0.4rem; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+    .nav-back svg { width: 14px; height: 14px; }
+    .page { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 100px 2rem 4rem; }
+    .breadcrumb { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: var(--accent); }
+    .wiki-header { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; margin-bottom: 3rem; }
+    @media (max-width: 750px) { .wiki-header { grid-template-columns: 1fr; } .skin-panel { order: -1; } }
+    .player-eyebrow { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .player-name { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1; letter-spacing: 0.04em; background: linear-gradient(135deg, #fff 30%, var(--accent) 70%, var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; }
+    .player-role-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .role-badge { padding: 0.3rem 0.85rem; border-radius: 50px; font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .role-badge.leader { background: rgba(74,240,196,0.12); border: 1px solid rgba(74,240,196,0.4); color: var(--accent); }
+    .role-badge.member { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--muted); }
+    .role-badge.dev    { background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.4); color: var(--accent2); }
+    .role-badge.pvp    { background: rgba(244,114,182,0.12); border: 1px solid rgba(244,114,182,0.4); color: var(--accent3); }
+    .role-badge.build    { background: rgba(114, 244, 131, 0.12); border: 1px solid rgba(120, 244, 114, 0.4); color: var(--accent4); }
+    .player-bio { font-size: 0.95rem; color: var(--muted); line-height: 1.8; max-width: 580px; }
+    .skin-panel { border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; position: sticky; top: 88px; }
+    .skin-panel-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); align-self: flex-start; }
+    #skin-canvas { border-radius: 12px; cursor: grab; display: block; }
+    #skin-canvas:active { cursor: grabbing; }
+    .skin-hint { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.15em; color: rgba(226,234,245,0.25); text-align: center; }
+    .skin-info-rows { width: 100%; display: flex; flex-direction: column; }
+    .skin-info-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .skin-info-row:last-child { border-bottom: none; }
+    .skey { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; }
+    .sval { font-weight: 600; color: var(--text); font-size: 0.8rem; }
+    .sval.accent { color: var(--accent); }
+    .divider { height: 1px; background: linear-gradient(to right, transparent, var(--glass-border), transparent); margin: 2.5rem 0; }
+    .wiki-body { max-width: 720px; }
+    .section-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1; letter-spacing: 0.04em; margin-bottom: 1.25rem; }
+    .wiki-p { font-size: 0.92rem; color: var(--muted); line-height: 1.85; margin-bottom: 1rem; }
+    .stat-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+    .stat-table th { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 0.6rem 1rem; border-bottom: 1px solid var(--glass-border); }
+    .stat-table td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text); vertical-align: top; }
+    .stat-table tr:last-child td { border-bottom: none; }
+    .stat-table td:first-child { color: var(--muted); font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em; }
+    .stat-table td:last-child { font-weight: 600; }
+    .stat-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .ach-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin: 1.25rem 0; }
+    .ach-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 1.25rem; border-radius: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-left: 3px solid var(--accent); font-size: 0.88rem; line-height: 1.6; color: var(--muted); transition: border-left-color 0.2s; }
+    .ach-item:hover { border-left-color: var(--accent2); }
+    .ach-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .ach-item strong { display: block; color: var(--text); font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+    .chip { padding: 0.3rem 0.85rem; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--muted); transition: all 0.2s; }
+    .chip:hover { border-color: var(--accent); color: var(--accent); }
+    .chip.accent { border-color: rgba(74,240,196,0.4); color: var(--accent); background: rgba(74,240,196,0.07); }
+    .chip.purple { border-color: rgba(167,139,250,0.4); color: var(--accent2); background: rgba(167,139,250,0.07); }
+    .glass-hover { position: relative; overflow: hidden; }
+    .glass-hover::after { content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%); transform: skewX(-15deg); transition: left 0.6s ease; pointer-events: none; }
+    .glass-hover:hover::after { left: 130%; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    footer { position: relative; z-index: 1; padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--glass-border); }
+    footer p { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--muted); line-height: 2; }
+    footer strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<div class="bg-layer">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<nav id="main-nav">
+  <a href="../../index.html" class="nav-logo">
+    <img src="../../images/THM2-transparent.webp" alt="THM">
+    <span>THM</span>
+  </a>
+  <a href="../../index.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Main
+  </a>
+</nav>
+
+<div class="page">
+  <p class="breadcrumb reveal">
+    <a href="../../index.html">THM</a>
+    <span>›</span>
+    <a href="../../index.html#members">Members</a>
+    <span>›</span>
+    <span>Leon_170709</span>
+  </p>
+
+  <div class="wiki-header">
+    <!-- Left: player info -->
+    <div>
+      <p class="player-eyebrow reveal">THM Member Profile</p>
+      <h1 class="player-name reveal">Leon_170709</h1>
+      <!-- Available badge classes: leader · member · dev · pvp -->
+      <div class="player-role-badges reveal">
+        <span class="role-badge leader">Leader</span>
+        <span class="role-badge dev">Developer</span>
+        <span class="role-badge pvp">PvP</span>
+        <span class="role-badge build">Builder</span>
+      </div>
+      <p class="player-bio reveal">
+        Short biography of the player. What they're known for in THM and their main role in the clan.
+      </p>
+      <table class="stat-table glass reveal" style="margin-top:1.5rem;border-radius:14px;overflow:hidden;">
+        <tbody>
+          <tr><td>Joined THM</td><td class="sval accent">13.03.2025</td></tr>
+          <tr><td>Server</td><td class="sval">6b6t.org</td></tr>
+          <tr><td>Status</td><td class="sval accent">Active</td></tr>
+          <tr><td>Known For</td><td class="sval">Highway work, Building, Programming</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Right: 3D Skin -->
+    <div class="skin-panel glass glass-hover reveal">
+      <p class="skin-panel-label">3D Skin Render</p>
+      <canvas id="skin-canvas"></canvas>
+      <p class="skin-hint">Drag to rotate · Scroll to zoom</p>
+      <div class="skin-info-rows">
+        <div class="skin-info-row">
+          <span class="skey">MagusKrill</span>
+          <span class="sval">Leon_170709</span>
+        </div>
+        <div class="skin-info-row">
+          <span class="skey">Skin Type</span>
+          <span class="sval">Steve (classic)</span><!-- or: Alex (slim) -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="wiki-body">
+    <section style="margin-bottom:3rem" class="reveal">
+      <p class="section-tag">Background</p>
+      <h2 class="section-title">About</h2>
+      <p class="wiki-p">He joined THM, won highway turnaments and Then helped building and griefing many Sky logos. He is the current maintainer of KitBot</p>
+      <p class="wiki-p">He is a sigma and a Alpha skibidi toilet.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section style="margin-bottom:3rem" class="reveal">
+      <p class="section-tag">Highlights</p>
+      <h2 class="section-title">Achievements</h2>
+      <ul class="ach-list">
+        <li class="ach-item">
+          <span class="ach-icon">🛣️</span>
+          <div><strong>KitBot1 Maintainer</strong>Currently the developer of KitBot1</div>
+        </li>
+        <li class="ach-item">
+          <span class="ach-icon">⚔️</span>
+          <div><strong>HSC Defender</strong>Held off multiple HSC griefing attempts, restoring 2,000+ blocks solo.</div>
+        </li>
+        <li class="ach-item">
+          <span class="ach-icon">🤝</span>
+          <div><strong>5BWR Negotiation</strong>Participated in the talks with The Watchmen that produced the 5 Blocks Wide Rule.</div>
+        </li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <section style="margin-bottom:3rem" class="reveal">
+      <p class="section-tag">Data</p>
+      <h2 class="section-title">Stats & Details</h2>
+      <table class="stat-table glass" style="border-radius:14px;overflow:hidden;">
+        <thead><tr><th>Attribute</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Blocks Placed</td><td>~1,200,000</td></tr>
+          <tr><td>Highway Axis</td><td>+X / +Z</td></tr>
+          <tr><td>Active Since</td><td>October 2024</td></tr>
+          <tr><td>Discord</td><td>MagusKrill</td></tr>
+          <tr><td>Preferred Tool</td><td>Meteor Client + THM Addon</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="divider"></div>
+
+    <section style="margin-bottom:3rem" class="reveal">
+      <p class="section-tag">Trivia</p>
+      <h2 class="section-title">Notes</h2>
+      <p class="wiki-p">Any extra facts, trivia, or notable moments worth mentioning.</p>
+      <div class="chip-row">
+        <span class="chip accent">Highway Builder</span>
+        <span class="chip">6b6t</span>
+        <span class="chip purple">Meteor Client</span>
+        <span class="chip">Active 2024–Present</span>
+        <span class="chip">Developer</span>
+      </div>
+    </section>
+  </div>
+</div>
+
+<footer>
+  <p><strong>THE HIGHWAY MEN</strong></p>
+  <p>6b6t · Minecraft Anarchy Server · Est. October 19, 2024</p>
+  <p style="margin-top:1rem;font-size:0.55rem;opacity:0.4;">THM · THE HIGHWAY MEN · 6B6T · ALL ROADS LEAD TO THM</p>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════
+     3D MINECRAFT SKIN RENDERER
+     Skin file: skin-file.png (64×64, new Minecraft format)
+     Set SLIM_ARMS = true for Alex/slim arm model.
+══════════════════════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // ─── Config ────────────────────────────────────────────────────────────────
+  const SLIM_ARMS = false;   // true = Alex (3 px wide arms)
+  const SKIN_FILE = 'skin-file.png';
+  const CANVAS_W  = 220;
+  const CANVAS_H  = 300;
+
+  // ─── Renderer ──────────────────────────────────────────────────────────────
+  const canvas = document.getElementById('skin-canvas');
+  canvas.style.width  = CANVAS_W + 'px';
+  canvas.style.height = CANVAS_H + 'px';
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(CANVAS_W, CANVAS_H);
+  renderer.setClearColor(0x000000, 0);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(28, CANVAS_W / CANVAS_H, 0.1, 200);
+  camera.position.set(0, 0, 70);
+
+  // Lights
+  scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+  const key = new THREE.DirectionalLight(0xffffff, 0.55);
+  key.position.set(4, 8, 8);
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xa78bfa, 0.2);
+  rim.position.set(-5, -3, -4);
+  scene.add(rim);
+
+  // ─── UV helper ─────────────────────────────────────────────────────────────
+  // Converts a pixel rectangle on the 64×64 skin into Three.js UVs.
+  // Three.js BoxGeometry faces are ordered: +X, -X, +Y, -Y, +Z, -Z
+  // Each face uses 4 vertices wound as: bottom-left, bottom-right, top-left, top-right
+  const TX = 64; // skin texture size
+
+  function faceUV(px, py, pw, ph, mirrorX) {
+    // Minecraft Y goes top-down, Three.js UV Y goes bottom-up → flip V
+    let u0 = px / TX,        u1 = (px + pw) / TX;
+    let v1 = 1 - py / TX,    v0 = 1 - (py + ph) / TX;
+    if (mirrorX) { const t = u0; u0 = u1; u1 = t; }
+    // Vertex order: bl, br, tl, tr
+    return [u0, v1,  u1, v1,  u0, v0,  u1, v0];
+  }
+
+  // Applies 6 face UV arrays to a BoxGeometry
+  function setUVs(geo, f) {
+    // f = array of 6 faceUV() results → flatten
+    const flat = [];
+    for (const face of f) flat.push(...face);
+    geo.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(flat), 2));
+  }
+
+  // ─── Model builder (called once texture is ready) ──────────────────────────
+  function buildModel(tex) {
+    tex.magFilter = THREE.NearestFilter;
+    tex.minFilter = THREE.NearestFilter;
+    tex.generateMipmaps = false;
+
+    const solid = new THREE.MeshLambertMaterial({ map: tex });
+    const trans = new THREE.MeshLambertMaterial({
+      map: tex, transparent: true, alphaTest: 0.1, side: THREE.DoubleSide
+    });
+
+    // Helper: create a mesh with custom UVs
+    function box(w, h, d, uvFaces, mat) {
+      const g = new THREE.BoxGeometry(w, h, d);
+      setUVs(g, uvFaces);
+      return new THREE.Mesh(g, mat || solid);
+    }
+
+    const aw = SLIM_ARMS ? 3 : 4; // arm pixel width
+
+    // ══ HEAD ══  base tile: 0,0  overlay: 32,0
+    // Face order: +X(right), -X(left), +Y(top), -Y(bot), +Z(front), -Z(back)
+    const head = box(8, 8, 8, [
+      faceUV(16,  8, 8, 8),          // right
+      faceUV( 0,  8, 8, 8),    // left  (mirror so texture faces outward)
+      faceUV( 8,  0, 8, 8),          // top
+      faceUV(16,  0, 8, 8),          // bottom
+      faceUV( 8,  8, 8, 8),          // front
+      faceUV(24,  8, 8, 8),          // back
+    ]);
+    head.position.y = 10;
+
+    const hat = box(9, 9, 9, [
+      faceUV(48,  8, 8, 8),
+      faceUV(32,  8, 8, 8, true),
+      faceUV(40,  0, 8, 8),
+      faceUV(48,  0, 8, 8),
+      faceUV(40,  8, 8, 8),
+      faceUV(56,  8, 8, 8),
+    ], trans);
+    hat.position.y = 10;
+
+    // ══ BODY ══  base: 16,16  overlay: 16,32
+    const body = box(8, 12, 4, [
+      faceUV(28, 20, 4, 12),
+      faceUV(16, 20, 4, 12, true),
+      faceUV(20, 16, 8,  4),
+      faceUV(28, 16, 8,  4),
+      faceUV(20, 20, 8, 12),
+      faceUV(32, 20, 8, 12),
+    ]);
+
+    const bodyOv = box(8.5, 12.5, 4.5, [
+      faceUV(28, 36, 4, 12),
+      faceUV(16, 36, 4, 12, true),
+      faceUV(20, 32, 8,  4),
+      faceUV(28, 32, 8,  4),
+      faceUV(20, 36, 8, 12),
+      faceUV(32, 36, 8, 12),
+    ], trans);
+
+    // ══ RIGHT ARM (player's right = scene -X) ══  base: 40,16  overlay: 40,32
+    const rArm = box(aw, 12, 4, [
+      faceUV(44,      20, 4,  12),
+      faceUV(40,      20, 4,  12, true),
+      faceUV(44,      16, aw,  4),
+      faceUV(44 + aw, 16, aw,  4),
+      faceUV(44,      20, aw, 12),
+      faceUV(44 + aw, 20, aw, 12),
+    ]);
+    rArm.position.set(-(4 + aw / 2), 0, 0);
+
+    const rArmOv = box(aw + 0.5, 12.5, 4.5, [
+      faceUV(44,      36, 4,  12),
+      faceUV(40,      36, 4,  12, true),
+      faceUV(44,      32, aw,  4),
+      faceUV(44 + aw, 32, aw,  4),
+      faceUV(44,      36, aw, 12),
+      faceUV(44 + aw, 36, aw, 12),
+    ], trans);
+    rArmOv.position.set(-(4 + aw / 2), 0, 0);
+
+    // ══ LEFT ARM (scene +X) ══  base: 32,48  overlay: 48,48
+    const lArm = box(aw, 12, 4, [
+      faceUV(36,      52, 4,  12),
+      faceUV(32,      52, 4,  12, true),
+      faceUV(36,      48, aw,  4),
+      faceUV(36 + aw, 48, aw,  4),
+      faceUV(36,      52, aw, 12),
+      faceUV(36 + aw, 52, aw, 12),
+    ]);
+    lArm.position.set(4 + aw / 2, 0, 0);
+
+    const lArmOv = box(aw + 0.5, 12.5, 4.5, [
+      faceUV(52,      52, 4,  12),
+      faceUV(48,      52, 4,  12, true),
+      faceUV(52,      48, aw,  4),
+      faceUV(52 + aw, 48, aw,  4),
+      faceUV(52,      52, aw, 12),
+      faceUV(52 + aw, 52, aw, 12),
+    ], trans);
+    lArmOv.position.set(4 + aw / 2, 0, 0);
+
+    // ══ RIGHT LEG (scene -X) ══  base: 0,16  overlay: 0,32
+    const rLeg = box(4, 12, 4, [
+      faceUV( 8, 20, 4, 12),
+      faceUV( 0, 20, 4, 12, true),
+      faceUV( 4, 16, 4,  4),
+      faceUV( 8, 16, 4,  4),
+      faceUV( 4, 20, 4, 12),
+      faceUV(12, 20, 4, 12),
+    ]);
+    rLeg.position.set(-2, -12, 0);
+
+    const rLegOv = box(4.5, 12.5, 4.5, [
+      faceUV( 8, 36, 4, 12),
+      faceUV( 0, 36, 4, 12, true),
+      faceUV( 4, 32, 4,  4),
+      faceUV( 8, 32, 4,  4),
+      faceUV( 4, 36, 4, 12),
+      faceUV(12, 36, 4, 12),
+    ], trans);
+    rLegOv.position.set(-2, -12, 0);
+
+    // ══ LEFT LEG (scene +X) ══  base: 16,48  overlay: 0,48
+    const lLeg = box(4, 12, 4, [
+      faceUV(24, 52, 4, 12),
+      faceUV(16, 52, 4, 12, true),
+      faceUV(20, 48, 4,  4),
+      faceUV(24, 48, 4,  4),
+      faceUV(20, 52, 4, 12),
+      faceUV(28, 52, 4, 12),
+    ]);
+    lLeg.position.set(2, -12, 0);
+
+    const lLegOv = box(4.5, 12.5, 4.5, [
+      faceUV( 8, 52, 4, 12),
+      faceUV( 0, 52, 4, 12, true),
+      faceUV( 4, 48, 4,  4),
+      faceUV( 8, 48, 4,  4),
+      faceUV( 4, 52, 4, 12),
+      faceUV(12, 52, 4, 12),
+    ], trans);
+    lLegOv.position.set(2, -12, 0);
+
+    const group = new THREE.Group();
+    group.add(
+      head, hat,
+      body, bodyOv,
+      rArm, rArmOv,
+      lArm, lArmOv,
+      rLeg, rLegOv,
+      lLeg, lLegOv
+    );
+    // Vertically: head top at y=14, legs bottom at y=-18 → centre at -2
+    // Shift up by 2 so the model sits centred in the camera view
+    group.position.y = 2;
+    scene.add(group);
+    return group;
+  }
+
+  // ─── Load texture ──────────────────────────────────────────────────────────
+  let model = null;
+
+  function fallbackTex() {
+    const c = document.createElement('canvas'); c.width = 64; c.height = 64;
+    const ctx = c.getContext('2d');
+    // Rough placeholder that shows the layout
+    ctx.fillStyle = '#c69b6d'; ctx.fillRect(8, 8, 8, 8);   // face
+    ctx.fillStyle = '#7b4e2d'; ctx.fillRect(0, 8, 8, 8);   // head side
+    ctx.fillStyle = '#3a7abf'; ctx.fillRect(20,20, 8,12);  // body
+    ctx.fillStyle = '#3a7abf'; ctx.fillRect(44,20, 4,12);  // r arm
+    return new THREE.CanvasTexture(c);
+  }
+
+  new THREE.TextureLoader().load(
+    SKIN_FILE,
+    tex  => { model = buildModel(tex); },
+    undefined,
+    ()   => { model = buildModel(fallbackTex()); }
+  );
+
+  // ─── Orbit interaction ─────────────────────────────────────────────────────
+  let drag = false, px = 0, py = 0;
+  let rotY = 0.5, rotX = 0.15;
+  let tY = rotY, tX = rotX;
+  let autoSpin = true;
+
+  canvas.addEventListener('mousedown',  e => { drag = true;  px = e.clientX; py = e.clientY; autoSpin = false; });
+  window .addEventListener('mouseup',   () => { drag = false; });
+  window .addEventListener('mousemove', e => {
+    if (!drag) return;
+    tY += (e.clientX - px) * 0.013; px = e.clientX;
+    tX += (e.clientY - py) * 0.013; py = e.clientY;
+    tX = Math.max(-1.0, Math.min(1.0, tX));
+  });
+  canvas.addEventListener('touchstart', e => { drag = true;  px = e.touches[0].clientX; py = e.touches[0].clientY; autoSpin = false; e.preventDefault(); }, { passive: false });
+  window .addEventListener('touchend',  () => { drag = false; });
+  window .addEventListener('touchmove', e => {
+    if (!drag) return;
+    tY += (e.touches[0].clientX - px) * 0.013; px = e.touches[0].clientX;
+    tX += (e.touches[0].clientY - py) * 0.013; py = e.touches[0].clientY;
+    tX = Math.max(-1.0, Math.min(1.0, tX));
+  });
+  canvas.addEventListener('wheel', e => {
+    camera.position.z = Math.max(24, Math.min(72, camera.position.z + e.deltaY * 0.06));
+    e.preventDefault();
+  }, { passive: false });
+
+  // ─── Render loop ───────────────────────────────────────────────────────────
+  let t = 0;
+  (function loop() {
+    requestAnimationFrame(loop);
+    t += 0.016;
+    if (model) {
+      if (autoSpin) { tY = t * 0.35; tX = Math.sin(t * 0.22) * 0.1; }
+      rotY += (tY - rotY) * 0.08;
+      rotX += (tX - rotX) * 0.08;
+      model.rotation.y = rotY;
+      model.rotation.x = rotX;
+      model.position.y = 2 + Math.sin(t * 1.1) * 0.18;
+    }
+    renderer.render(scene, camera);
+  })();
+
+  // ─── Scroll reveal & nav ───────────────────────────────────────────────────
+  const ro = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('main-nav').style.background =
+      window.scrollY > 50 ? 'rgba(6,10,16,0.85)' : 'rgba(6,10,16,0.4)';
+  });
+})();
+</script>
+</body>
+</html>
