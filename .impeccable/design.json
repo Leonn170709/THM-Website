@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-27T00:00:00Z",
+  "title": "Design System: The Highway Men",
+  "extensions": {
+    "colorMeta": {
+      "lava-orange": {
+        "role": "primary",
+        "displayName": "Lava Orange",
+        "canonical": "oklch(72% 0.19 45)",
+        "tonalRamp": ["#1a0700", "#3d1800", "#672c00", "#944100", "#c05700", "#e07230", "#fb923c", "#ffbb8a", "#ffddbc"]
+      },
+      "nether-red": {
+        "role": "secondary",
+        "displayName": "Nether Red",
+        "canonical": "oklch(56% 0.22 25)",
+        "tonalRamp": ["#1f0000", "#420000", "#6b0000", "#970000", "#c81414", "#ef4444", "#ff7a7a", "#ffaaaa", "#ffd5d5"]
+      },
+      "volcanic-brown": {
+        "role": "tertiary",
+        "displayName": "Volcanic Brown",
+        "canonical": "oklch(28% 0.12 35)",
+        "tonalRamp": ["#120300", "#2a0900", "#451200", "#601c00", "#7c2d12", "#a04030", "#c0604e", "#d89080", "#f0c8b8"]
+      },
+      "discord-blurple": {
+        "role": "structural",
+        "displayName": "Discord Blurple",
+        "canonical": "oklch(55% 0.18 265)",
+        "tonalRamp": ["#0a0a2e", "#14145a", "#232394", "#3535c8", "#5865f2", "#7a85f4", "#9aa4f7", "#bcc3fa", "#dde2fd"]
+      },
+      "void-black": {
+        "role": "neutral",
+        "displayName": "Void Black",
+        "canonical": "oklch(5% 0.01 255)",
+        "tonalRamp": ["#060a10", "#0d1520", "#1a2535", "#273550", "#34456a", "#4a5d80", "#637098", "#8a9ab8", "#dce5ef"]
+      },
+      "frost-white": {
+        "role": "neutral",
+        "displayName": "Frost White",
+        "canonical": "oklch(91% 0.02 230)",
+        "tonalRamp": ["#4a5a6e", "#617284", "#78889a", "#90a0b0", "#aab8c6", "#c4d0da", "#d8e2ec", "#e2eaf5", "#f4f7fb"]
+      },
+      "glass-surface": {
+        "role": "neutral",
+        "displayName": "Glass Surface",
+        "canonical": "rgba(255,255,255,0.07)",
+        "tonalRamp": ["#ffffff05", "#ffffff08", "#ffffff0d", "#ffffff12", "#ffffff18", "#ffffff20", "#ffffff2e", "#ffffff40", "#ffffff60"]
+      },
+      "muted-frost": {
+        "role": "neutral",
+        "displayName": "Muted Frost",
+        "canonical": "rgba(226,234,245,0.5)",
+        "tonalRamp": ["#e2eaf510", "#e2eaf520", "#e2eaf530", "#e2eaf540", "#e2eaf550", "#e2eaf560", "#e2eaf570", "#e2eaf580", "#e2eaf5"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero <h1> title only. One per page. Always Bebas Neue." },
+      "headline": { "displayName": "Headline", "purpose": "Section <h2> titles. Bebas Neue. One per section." },
+      "title": { "displayName": "Title", "purpose": "Sub-section headings, card titles. Syne 800." },
+      "body": { "displayName": "Body", "purpose": "Paragraph copy. Syne 400. Muted Frost color." },
+      "label": { "displayName": "Label", "purpose": "All metadata: chips, dates, nav links, stat labels. Space Mono, uppercase, tracked." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.25, 0, 0.5, 1)", "purpose": "Default hover/state transitions (0.2–0.3s)" },
+      { "name": "ease-reveal", "value": "ease", "purpose": "Scroll-reveal fadeUp and section entrances (0.7–0.8s)" },
+      { "name": "atmospheric-float", "value": "ease-in-out", "purpose": "Background orb drift (12–18s infinite)" },
+      { "name": "duration-fast", "value": "0.2s", "purpose": "Color/border hover transitions" },
+      { "name": "duration-standard", "value": "0.3s", "purpose": "Transform + shadow hover transitions, mobile nav slide" },
+      { "name": "duration-reveal", "value": "0.7s", "purpose": "Scroll-reveal opacity + transform" },
+      { "name": "duration-atmospheric", "value": "8s", "purpose": "Background glow pulse" }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "360px" },
+      { "name": "sm", "value": "600px" },
+      { "name": "md", "value": "700px" },
+      { "name": "nav-break", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main CTA. Lava Orange fill, Void Black text, pill-shaped. Used for primary on-page actions.",
+      "html": "<button class=\"ds-btn-primary\">EXPLORE</button>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap'); .ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; background: #fb923c; color: #060a10; padding: 0.75rem 2rem; min-height: 44px; border-radius: 50px; font-family: 'Space Mono', 'Courier New', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border: none; cursor: pointer; transition: box-shadow 0.3s, transform 0.3s; box-shadow: 0 0 30px rgba(251,146,60,0.4); } .ds-btn-primary:hover { box-shadow: 0 0 50px rgba(251,146,60,0.6); transform: translateY(-2px); } .ds-btn-primary:focus-visible { outline: 2px solid #fb923c; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary CTA. Glass-surface fill with glass border. Border and text shift to Lava Orange on hover.",
+      "html": "<button class=\"ds-btn-ghost\">MEMBERS</button>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap'); .ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.07); color: #e2eaf5; padding: 0.75rem 2rem; min-height: 44px; border-radius: 50px; font-family: 'Space Mono', 'Courier New', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.18); cursor: pointer; transition: border-color 0.3s, color 0.3s; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); } .ds-btn-ghost:hover { border-color: #fb923c; color: #fb923c; } .ds-btn-ghost:focus-visible { outline: 2px solid #fb923c; outline-offset: 3px; }"
+    },
+    {
+      "name": "Discord Button",
+      "kind": "button",
+      "refersTo": "button-discord",
+      "description": "Join Discord CTA. Discord Blurple fill. Used exclusively for Discord join actions.",
+      "html": "<button class=\"ds-btn-discord\">JOIN THM</button>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap'); .ds-btn-discord { display: inline-flex; align-items: center; justify-content: center; background: #5865f2; color: #ffffff; padding: 0.75rem 2rem; min-height: 44px; border-radius: 50px; font-family: 'Space Mono', 'Courier New', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border: none; cursor: pointer; transition: box-shadow 0.3s, transform 0.3s; box-shadow: 0 0 30px rgba(88,101,242,0.3); } .ds-btn-discord:hover { box-shadow: 0 0 50px rgba(88,101,242,0.5); transform: translateY(-2px); } .ds-btn-discord:focus-visible { outline: 2px solid #5865f2; outline-offset: 3px; }"
+    },
+    {
+      "name": "Glass Card",
+      "kind": "card",
+      "refersTo": "card-glass",
+      "description": "Primary container. Glassmorphism surface with dual-tone border for dimensional light-source effect.",
+      "html": "<div class=\"ds-card-glass\"><p style=\"color:#e2eaf5;font-family:sans-serif;\">Card content</p></div>",
+      "css": ".ds-card-glass { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18); border-top-color: rgba(255,255,255,0.25); border-left-color: rgba(255,255,255,0.25); border-radius: 24px; padding: 2.5rem; position: relative; overflow: hidden; } @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) { .ds-card-glass { background: rgba(255,255,255,0.07); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); } } .ds-card-glass::after { content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%); transform: skewX(-15deg); transition: left 0.6s ease; pointer-events: none; } .ds-card-glass:hover::after { left: 130%; }"
+    },
+    {
+      "name": "Member Tag — Leader",
+      "kind": "chip",
+      "refersTo": "member-tag-leader",
+      "description": "Roster chip for clan leaders. Lava Orange tint with orange text.",
+      "html": "<a class=\"ds-member-tag ds-member-leader\">Ryazor</a>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap'); .ds-member-tag { padding: 0.4rem 1rem; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em; text-decoration: none; display: inline-block; transition: transform 0.2s, border-color 0.2s, color 0.2s; cursor: pointer; } .ds-member-leader { background: rgba(251,146,60,0.12); border: 1px solid rgba(251,146,60,0.35); color: #fb923c; } .ds-member-tag:hover { transform: translateY(-2px); border-color: #ef4444; color: #ef4444; } .ds-member-tag:focus-visible { outline: 2px solid #fb923c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Member Tag — Member",
+      "kind": "chip",
+      "refersTo": "member-tag-member",
+      "description": "Roster chip for standard clan members. Glass surface with frost text.",
+      "html": "<a class=\"ds-member-tag ds-member-std\">Volizray</a>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap'); .ds-member-tag { padding: 0.4rem 1rem; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em; text-decoration: none; display: inline-block; transition: transform 0.2s, border-color 0.2s, color 0.2s; cursor: pointer; } .ds-member-std { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18); color: #e2eaf5; } .ds-member-tag:hover { transform: translateY(-2px); border-color: #ef4444; color: #ef4444; }"
+    },
+    {
+      "name": "Meta Chip",
+      "kind": "chip",
+      "refersTo": "meta-chip",
+      "description": "Pill-shaped metadata label used inside cards. Three variants: default (muted), accent (orange), secondary (red).",
+      "html": "<div style=\"display:flex;gap:0.5rem;flex-wrap:wrap\"><span class=\"ds-chip\">Discord Bot</span><span class=\"ds-chip ds-chip-accent\">Node.js</span><span class=\"ds-chip ds-chip-secondary\">Maintainer</span></div>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap'); .ds-chip { display: inline-flex; align-items: center; padding: 0.3rem 0.9rem; border-radius: 50px; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: rgba(226,234,245,0.5); } .ds-chip-accent { border-color: #fb923c; color: #fb923c; } .ds-chip-secondary { border-color: #ef4444; color: #ef4444; }"
+    },
+    {
+      "name": "Stat Card",
+      "kind": "card",
+      "refersTo": "card-glass",
+      "description": "Compact glass card for numeric stats. Used in the hero grid. Number in Bebas Neue / Lava Orange, label in Space Mono.",
+      "html": "<div class=\"ds-stat-card\"><div class=\"ds-stat-num\">3k</div><div class=\"ds-stat-label\">Discord Members</div></div>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono&display=swap'); .ds-stat-card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18); border-top-color: rgba(255,255,255,0.25); border-left-color: rgba(255,255,255,0.25); border-radius: 14px; padding: 1rem 0.75rem; text-align: center; } @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) { .ds-stat-card { background: rgba(255,255,255,0.07); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); } } .ds-stat-num { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 2.2rem; color: #fb923c; line-height: 1; } .ds-stat-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(226,234,245,0.5); margin-top: 0.3rem; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Nether Grid",
+    "overview": "The Nether is a void. Hostile by default, navigable by force of labor and organization. The Highway Men's visual system lives here: a dark, pressurized environment where every surface floats above the void behind it, every accent is heat against cold, and order is something you impose by showing up every day and moving blocks. There is nothing decorative about this system. What reads as aesthetic is a direct translation of what THM does — precision infrastructure in an environment that wants to kill you.\n\nThe glass surfaces are the Nether grid: semi-transparent layers suspended over the atmospheric background, catching light from the orange and red orbs that breathe underneath. The typography is blunt and structural — Bebas Neue was designed for weight and impact, Space Mono signals precision and technical record-keeping, and Syne bridges them with contemporary forward motion. Hierarchy is created through scale and contrast, not through decoration.\n\nThis system explicitly rejects: generic gaming-clan aesthetics (cheesy HUD overlays, fantasy fonts, Roblox-energy, stock Minecraft theming), and corporate SaaS landing-page patterns (warm-neutral body backgrounds, hero-metric stat cards, 'Join the waitlist' energy, decorative glassmorphism deployed without purpose).",
+    "keyCharacteristics": [
+      "Void-black (#060a10) base — deep-space charcoal, not pure black",
+      "Glass surfaces as dimensional layers over the animated atmospheric background",
+      "Three-tier heat palette: Lava Orange (primary CTA), Nether Red (secondary emphasis), Volcanic Brown (deep heat)",
+      "Bebas Neue for impact display, Space Mono for precision labels, Syne for readable body",
+      "Atmospheric motion: background orbs breathe, sections reveal on scroll, elements float",
+      "Pill-shaped buttons (50px radius) creating floating, decisive CTAs against the dark"
+    ],
+    "rules": [
+      { "name": "The Heat Hierarchy Rule", "body": "Lava Orange is for action. Nether Red is for emphasis. Volcanic Brown is for atmosphere. They never swap roles.", "section": "colors" },
+      { "name": "The Discord Quarantine Rule", "body": "Discord Blurple (#5865f2) appears only on Discord CTAs. It is structural, not decorative.", "section": "colors" },
+      { "name": "The Mono-Label Contract", "body": "Space Mono is exclusively for labels, chips, dates, and navigation. Never for body prose or headings.", "section": "typography" },
+      { "name": "The Gradient Ceiling", "body": "Gradient text (-webkit-background-clip: text) is permitted on one element only: the hero <h1> display title. One instance, always the display title.", "section": "typography" },
+      { "name": "The Atmospheric Dependency Rule", "body": "Glass cards depend entirely on the animated background orbs for their visual effect. Never remove or disable the background layer.", "section": "elevation" },
+      { "name": "The Shadow Prohibition", "body": "box-shadow is not used in this system. Depth comes from glass treatment and the background, not from painted-on shadows.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Bebas Neue for all h1 and h2 display headings, and Space Mono for all label/chip/nav text.",
+      "Do start every page with the animated background layer (.bg-layer + three .orb elements).",
+      "Do apply the dual-border highlight technique to all glass cards: border-top-color and border-left-color at 0.25 opacity.",
+      "Do size tap targets to minimum 44×44px on interactive elements.",
+      "Do include @media (prefers-reduced-motion: reduce) on every animation.",
+      "Do use @supports (backdrop-filter) guards before applying the blur treatment.",
+      "Do reserve Discord Blurple exclusively for Discord CTAs.",
+      "Do use clamp() for all display and headline font sizes."
+    ],
+    "donts": [
+      "Don't use gradient text anywhere except the hero <h1>. One instance in the system, total.",
+      "Don't use box-shadow for card depth. This system achieves depth through glass, not shadow.",
+      "Don't use warm-neutral, cream, paper, or parchment backgrounds. The body background is always Void Black (#060a10).",
+      "Don't apply glassmorphism to non-container elements (text, icons, decorative dividers).",
+      "Don't use gaming-cliché styling: no HUD overlays, no neon green, no fantasy display fonts.",
+      "Don't apply SaaS landing-page patterns: no hero-metric stat card grids, no warm-tinted paper backgrounds.",
+      "Don't use uppercase tracking outside Space Mono label contexts.",
+      "Don't add a fourth accent color without retiring one. The three-tier heat palette is complete.",
+      "Don't use border-left stripes as colored accents on cards.",
+      "Don't gate any content visibility on a JavaScript-triggered class."
+    ]
+  }
+}

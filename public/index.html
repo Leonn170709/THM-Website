@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Highway Men</title>
+    <meta name="theme-color" content="#060a10">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/png" href="/images/THM2-transparent.webp" />
+    <link rel="apple-touch-icon" href="/images/THM2-transparent.webp" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap"
       rel="stylesheet">
@@ -32,8 +37,18 @@
       background: var(--dark);
       color: var(--text);
       font-family: 'Syne', sans-serif;
-      overflow-x: hidden; /* Prevent horizontal scroll from floating elements */
+      overflow-x: hidden;
       min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
     }
 
     /* Typography Accents */
@@ -59,13 +74,12 @@
         radial-gradient(circle at 10% 90%, rgba(251, 146, 60, 0.22) 0%, transparent 60%),
         radial-gradient(circle at 90% 80%, rgba(124, 45, 18, 0.18) 0%, transparent 60%);
     }
-    /* Gritty noise texture with heat shimmer animation */
+    /* Subtle static noise grain */
     .bg-layer::after {
       content: "";
       position: absolute; inset: 0;
-      opacity: 0.03;
+      opacity: 0.025;
       pointer-events: none;
-      animation: heatHaze 0.2s steps(2) infinite;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
@@ -89,12 +103,6 @@
       66% { transform: translate(-1%, 3%) scale(0.98); }
     }
 
-    /* Rapid jitter for the grain overlay to simulate heat distortion */
-    @keyframes heatHaze {
-      0%, 100% { transform: translate(0,0); }
-      50% { transform: translate(-1px, 1px); }
-    }
-
     /* Slow breathing effect for the background light */
     @keyframes pulseGlow {
       0% { opacity: 0.7; }
@@ -103,12 +111,17 @@
 
     /* Glassmorphism style used on cards and navigation */
     .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(var(--blur));
-      -webkit-backdrop-filter: blur(var(--blur));
+      background: rgba(255,255,255,0.12); /* opaque fallback for no-backdrop-filter */
       border: 1px solid var(--glass-border);
       border-top-color: var(--glass-highlight);
       border-left-color: var(--glass-highlight);
+    }
+    @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+      .glass {
+        background: var(--glass-bg);
+        backdrop-filter: blur(var(--blur));
+        -webkit-backdrop-filter: blur(var(--blur));
+      }
     }
 
     /* Navigation Bar */
@@ -117,11 +130,16 @@
       padding: 0 2rem;
       height: 68px;
       display: flex; align-items: center; justify-content: space-between;
-      background: rgba(6,10,16,0.4);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(6,10,16,0.6);
       border-bottom: 1px solid var(--glass-border);
       transition: background 0.3s;
+    }
+    @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+      nav {
+        background: rgba(6,10,16,0.4);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
     }
     .nav-logo {
       display: flex; align-items: center; gap: 12px;
@@ -134,7 +152,7 @@
       letter-spacing: 0.1em;
       color: var(--text);
     }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
     .nav-links a {
       font-family: 'Space Mono', monospace;
       font-size: 0.75rem;
@@ -143,18 +161,70 @@
       color: var(--muted);
       text-decoration: none;
       transition: color 0.2s;
+      padding: 0.5rem 0;
+      min-height: 44px;
+      display: flex; align-items: center;
     }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* Hamburger button — hidden on desktop */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      min-width: 44px; min-height: 44px;
+      justify-content: center; align-items: center;
+      z-index: 101;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     @media (max-width: 768px) {
       nav { padding: 0 1rem; }
-      .nav-links { 
-        display: none; /* Hides desktop links on mobile for a cleaner look */
+      .nav-hamburger { display: flex; }
+      .nav-logo span { font-size: 1.3rem; }
+
+      .nav-links {
+        position: fixed;
+        top: 68px; left: 0; right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(6,10,16,0.97);
+        border-bottom: 1px solid var(--glass-border);
+        padding: 1rem 0;
+        transform: translateY(-110%);
+        transition: transform 0.3s ease;
+        z-index: 99;
       }
-      .nav-logo span {
-        font-size: 1.3rem;
+      @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+        .nav-links {
+          background: rgba(6,10,16,0.88);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+        }
       }
+      .nav-links.open { transform: translateY(0); }
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        display: flex; padding: 0.9rem 2rem;
+        font-size: 0.85rem;
+        min-height: 48px;
+        width: 100%;
+      }
+      .nav-btn-discord { margin-left: 0 !important; border-radius: 0 !important; justify-content: center; }
     }
-    .nav-links a:hover { color: var(--accent); }
 
     /* Discord CTA in Navigation */
     .nav-btn-discord {
@@ -177,9 +247,10 @@
     #hero {
       position: relative; z-index: 1;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center;
-      padding: 8rem 2rem 8rem;
+      padding: 8rem 1.25rem 8rem;
     }
     /* Subtitle above the logo */
     .hero-eyebrow {
@@ -237,30 +308,42 @@
       animation: fadeUp 0.8s ease forwards 0.8s;
     }
     .hero-stats {
-      display: flex; gap: 2rem; margin-top: 3rem; flex-wrap: wrap; justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+      width: 100%;
+      max-width: 680px;
       opacity: 0;
       animation: fadeUp 0.8s ease forwards 1s;
     }
     .stat-card {
-      padding: 1.2rem 2rem;
-      border-radius: 16px;
+      padding: 1rem 0.75rem;
+      border-radius: 14px;
       text-align: center;
-      min-width: 120px;
-      flex: 1; /* Allow cards to grow on smaller screens */
     }
     .stat-num {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.4rem;
+      font-size: 2.2rem;
       color: var(--accent);
       line-height: 1;
     }
     .stat-label {
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--muted);
       margin-top: 0.3rem;
+    }
+    @media (max-width: 600px) {
+      .hero-stats { grid-template-columns: repeat(2, 1fr); max-width: 340px; }
+      .stat-num { font-size: 1.9rem; }
+    }
+    @media (max-width: 360px) {
+      .hero-stats { gap: 0.6rem; }
+      .stat-num { font-size: 1.6rem; }
+      .stat-label { font-size: 0.52rem; letter-spacing: 0.06em; }
     }
     /* Call to Action Buttons */
     .hero-cta {
@@ -271,6 +354,7 @@
     /* Base Button Styles */
     .btn {
       padding: 0.75rem 2rem;
+      min-height: 44px;
       border-radius: 50px;
       font-family: 'Space Mono', monospace;
       font-size: 0.75rem;
@@ -280,6 +364,8 @@
       cursor: pointer;
       border: none;
       transition: all 0.3s;
+      display: inline-flex; align-items: center; justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
     .btn-primary {
       background: var(--accent);
@@ -448,16 +534,15 @@
       border: 1px solid var(--glass-border);
       position: relative;
     }
-    .map-wrap::before {
-      content: 'NETHER HIGHWAY MAP — 6B6T — AS OF 02.03.2026';
-      position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+    .map-updated {
       font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: rgba(255,255,255,0.5);
-      z-index: 2;
-      white-space: nowrap;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      text-align: right;
     }
+    .map-updated span { color: var(--accent); }
     .map-wrap img {
       width: 100%;
       display: block;
@@ -527,12 +612,12 @@
     .kitbot-img {
       width: 160px; height: 160px;
       object-fit: contain;
-      filter: drop-shadow(0 0 30px rgba(167,139,250,0.4));
-      animation: rotate 20s linear infinite;
+      filter: drop-shadow(0 0 20px rgba(167,139,250,0.3));
+      animation: kitFloat 5s ease-in-out infinite;
     }
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    @keyframes kitFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     /* Member Tag Roster */
@@ -705,13 +790,18 @@
         <img src="images/THM2-transparent.webp" alt="THM">
         <span>THM</span>
       </a>
-      <ul class="nav-links">
+      <button class="nav-hamburger" aria-label="Open navigation"
+        aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#history">History</a></li>
         <li><a href="#highways">Highways</a></li>
         <li><a href="#kitbot">Kitbot</a></li>
         <li><a href="#members">Members</a></li>
-        <li><a href="https://discord.gg/your-invite" target="_blank" class="nav-btn-discord">Join</a></li>
+        <li><a href="https://discord.gg/thm" target="_blank"
+            rel="noopener noreferrer" class="nav-btn-discord">Join</a></li>
       </ul>
     </nav>
 
@@ -744,7 +834,8 @@
       <div class="hero-cta">
         <a href="#about" class="btn btn-primary">Explore</a>
         <a href="#members" class="btn btn-ghost">Members</a>
-        <a href="https://discord.gg/your-invite" target="_blank" class="btn btn-discord">Join THM</a>
+        <a href="https://discord.gg/thm" target="_blank"
+          rel="noopener noreferrer" class="btn btn-discord">Join THM</a>
       </div>
       <div class="scroll-hint">
         <div class="scroll-mouse">
@@ -779,6 +870,7 @@
         <div class="about-img-wrap reveal">
           <img src="images/THM2-transparent.webp"
             alt="THM Logo Transparent White"
+            loading="lazy"
             style="object-fit:contain; background: rgba(6,10,16,0.5); padding: 2rem;">
         </div>
       </div>
@@ -786,12 +878,19 @@
 
     <!-- CTA Section -->
     <section id="join" style="text-align: center; padding: 4rem 2rem;">
-      <div class="glass reveal" style="padding: 3rem; border-radius: 24px; border-color: rgba(88, 101, 242, 0.3);">
-        <h2 class="section-title" style="margin-bottom: 1rem;">Ready to build?</h2>
-        <p style="color: var(--muted); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-          Join the most active highway community on 6b6t. Whether you're a builder, a developer, or a protector, there's a place for you in The Highway Men.
+      <div class="glass reveal"
+        style="padding: 3rem; border-radius: 24px; border-color: rgba(88, 101, 242, 0.3);">
+        <h2 class="section-title" style="margin-bottom: 1rem;">Ready to
+          build?</h2>
+        <p
+          style="color: var(--muted); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+          Join the most active highway community on 6b6t. Whether you're a
+          builder, a developer, or a protector, there's a place for you in The
+          Highway Men.
         </p>
-        <a href="https://discord.gg/your-invite" target="_blank" class="btn btn-discord" style="padding: 1rem 3rem; font-size: 0.9rem;">Join the Discord</a>
+        <a href="https://discord.gg/thm" target="_blank"
+          rel="noopener noreferrer" class="btn btn-discord"
+          style="padding: 1rem 3rem; font-size: 0.9rem;">Join the Discord</a>
       </div>
     </section>
 
@@ -856,7 +955,7 @@
     <div class="divider"></div>
 
     <!-- Map -->
-    <div id="highways" id="map-section">
+    <div id="highways">
       <section style="padding-bottom: 0;">
         <p class="section-tag reveal">Infrastructure</p>
         <h2 class="section-title reveal">Nether Highway Network</h2>
@@ -869,8 +968,10 @@
       <div
         style="max-width: 1100px; margin: 0 auto; padding: 1rem 2rem 6rem; position: relative; z-index: 1;">
         <div class="map-wrap glass reveal">
-          <img src="images/highway-map.webp" alt="6b6t Nether Highway Map">
+          <img src="images/highway-map.webp" alt="6b6t Nether Highway Map"
+            loading="lazy">
         </div>
+        <p class="map-updated reveal">Map last updated: <span id="map-updated-time">—</span></p>
       </div>
     </div>
 
@@ -901,7 +1002,7 @@
             </div>
           </div>
           <img src="images/kitbot-icon.webp" alt="Kitbot Icon"
-            class="kitbot-img">
+            loading="lazy" class="kitbot-img">
         </div>
       </div>
     </section>
@@ -954,7 +1055,8 @@
           long history on 2b2t. They partnered with THM following the
           establishment of the 5 Blocks Wide Rule, contributing massively to
           highway expansion: they expanded the Nether highways more than any
-          other group in 6b6t's history, other than the highway men, constructed 23 member bases, and hosted
+          other group in 6b6t's history, other than the highway men, constructed
+          23 member bases, and hosted
           giveaways with over 20,000 kits.
         </p>
         <p
@@ -991,8 +1093,8 @@
         <a href="players/Ryazor/" class="member-tag leader">Ryazor</a>
         <a href="players/Kyr0zen/" class="member-tag leader">Kyr0zen</a>
         <a href="players/Leon_170709/" class="member-tag leader">Leon_170709</a>
+        <a href="players/FantasticJB/" class="member-tag leader">FantasticJB</a>
         <!-- Members -->
-        <a href="players/FantasticJB/" class="member-tag member">FantasticJB</a>
         <a href="players/Volizray/" class="member-tag member">Volizray</a>
         <a href="players/fainecio/" class="member-tag member">fainecio</a>
         <a href="players/particl3s/" class="member-tag member">particl3s</a>
@@ -1002,26 +1104,32 @@
         <a href="players/FloppaDude/" class="member-tag member">FloppaDude</a>
         <a href="players/Zitrone30/" class="member-tag member">Zitrone30</a>
         <a href="players/Ooranges/" class="member-tag member">Ooranges</a>
-        <a href="players/AlphaCrystal/" class="member-tag member">AlphaCrystal</a>
-        <a href="players/Vladimir_Lem0n/" class="member-tag member">Vladimir_Lem0n</a>
+        <a href="players/AlphaCrystal/"
+          class="member-tag member">AlphaCrystal</a>
+        <a href="players/Vladimir_Lem0n/"
+          class="member-tag member">Vladimir_Lem0n</a>
         <a href="players/Evrality/" class="member-tag member">Evrality</a>
         <a href="players/nintoaster1/" class="member-tag member">nintoaster1</a>
-        <a href="players/D_Plex_Legend/" class="member-tag member">D_Plex_Legend</a>
+        <a href="players/D_Plex_Legend/"
+          class="member-tag member">D_Plex_Legend</a>
         <a href="players/GoShKo/" class="member-tag member">_GoShKo_</a>
         <a href="players/NexLordMax/" class="member-tag member">NexLordMax</a>
         <a href="players/Zgladiscool/" class="member-tag member">Zgladiscool</a>
-        <a href="players/VeryHradName/" class="member-tag member">VeryHradName</a>
+        <a href="players/VeryHradName/"
+          class="member-tag member">VeryHradName</a>
         <a href="players/Moosipall2/" class="member-tag member">Moosipall2</a>
         <a href="players/Hejky420/" class="member-tag member">Hejky420</a>
         <a href="players/risabhpro/" class="member-tag member">risabhpro</a>
         <a href="players/KudoBelle/" class="member-tag member">KudoBelle</a>
         <a href="players/Dazz005/" class="member-tag member">Dazz005</a>
         <a href="players/aetherf/" class="member-tag member">aetherf</a>
-        <a href="players/RescueRabbit/" class="member-tag member">RescueRabbit</a>
+        <a href="players/RescueRabbit/"
+          class="member-tag member">RescueRabbit</a>
         <a href="players/misakplak/" class="member-tag member">misakplak</a>
         <a href="players/qqzcw/" class="member-tag member">qqzcw</a>
         <a href="players/x1no2/" class="member-tag member">x1no2</a>
-        <a href="players/SloppiPapi00/" class="member-tag member">SloppiPapi00</a>
+        <a href="players/SloppiPapi00/"
+          class="member-tag member">SloppiPapi00</a>
         <a href="players/Jetsjet/" class="member-tag member">Jetsjet</a>
         <a href="players/NotAPro1081/" class="member-tag member">NotAPro1081</a>
         <a href="players/NatetheDawg/" class="member-tag member">NatetheDawg</a>
@@ -1039,41 +1147,70 @@
       <p>6b6t · Minecraft Anarchy Server · Est. October 19, 2024</p>
       <p style="margin-top: 0.5rem;">Leaders:
         <strong>Ryazor</strong> · <strong>Kyr0zen</strong> ·
-        <strong>Leon_170709</strong></p>
+        <strong>Leon_170709</strong>·
+        <strong>FantasticJB</strong></p>
       <p style="margin-top: 1rem; font-size: 0.55rem; opacity: 0.4;">THM · THE
         HIGHWAY MEN · 6B6T · ALL ROADS LEAD TO THM</p>
     </footer>
 
     <script>
+  // Map last-updated timestamp
+  (async () => {
+    try {
+      const res = await fetch('/map-meta.json');
+      if (!res.ok) return;
+      const { updated } = await res.json();
+      const d = new Date(updated);
+      const el = document.getElementById('map-updated-time');
+      if (el && !isNaN(d)) {
+        el.textContent = d.toLocaleString(undefined, {
+          year: 'numeric', month: 'short', day: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+      }
+    } catch {}
+  })();
+
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        // Stagger children if needed
-      }
+      if (e.isIntersecting) e.target.classList.add('visible');
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   // Nav opacity on scroll
+  const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    if (window.scrollY > 50) {
-      nav.style.background = 'rgba(6,10,16,0.85)';
-    } else {
-      nav.style.background = 'rgba(6,10,16,0.4)';
-    }
+    nav.style.background = window.scrollY > 50
+      ? 'rgba(6,10,16,0.92)'
+      : 'rgba(6,10,16,0.4)';
+  }, { passive: true });
+
+  // Hamburger menu toggle
+  const hamburger = document.querySelector('.nav-hamburger');
+  const navLinks = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    hamburger.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  });
+  // Close mobile nav when a link is clicked
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open navigation');
+    });
   });
 
-  // Prepare member tags for staggered entrance animation
+  // Member tags staggered entrance
   document.querySelectorAll('.members-grid .member-tag').forEach((tag, i) => {
-    tag.style.transitionDelay = `${i * 0.03}s`; // Offset each tag by a small delay
+    tag.style.transitionDelay = `${i * 0.03}s`;
     tag.style.opacity = '0';
     tag.style.transform = 'translateY(10px)';
     tag.style.transition = 'opacity 0.4s ease, transform 0.4s ease, color 0.2s, border-color 0.2s, box-shadow 0.2s';
   });
-  // Trigger member grid entrance animation when section is in view
   const memberObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
