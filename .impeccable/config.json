@@ -1,7 +1,9 @@
 {
   "detector": {
     "ignoreRules": [],
-    "ignoreFiles": [],
+    "ignoreFiles": [
+      "public/players/Leon_170709/index.html"
+    ],
     "ignoreValues": [
       {
         "rule": "design-system-color",

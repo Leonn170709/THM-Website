@@ -2,253 +2,258 @@
 name: The Highway Men
 description: The dominant Nether highway clan on 6b6t — infrastructure at scale.
 colors:
-  lava-orange: "#fb923c"
-  nether-red: "#ef4444"
-  volcanic-brown: "#7c2d12"
-  discord-blurple: "#5865f2"
-  void-black: "#060a10"
-  frost-white: "#e2eaf5"
-  glass-surface: "#ffffff12"
-  glass-border: "#ffffff2e"
-  glass-highlight: "#ffffff40"
-  muted-frost: "#e2eaf580"
+  fire:         "#e25c1c"
+  lava:         "#c0391a"
+  ember:        "#f5a620"
+  coal:         "#3d1a0e"
+  coal-text:    "#a8684d"
+  discord:      "#5865F2"
+  bg-void:      "#070407"
+  bg-surface:   "#100a0e"
+  bg-elevated:  "#180d15"
+  fg-primary:   "#f0e8ec"
+  fg-secondary: "rgba(240,232,236,0.60)"
+  fg-muted:     "rgba(240,232,236,0.32)"
+  glass-fill:   "rgba(255,255,255,0.045)"
+  glass-border: "rgba(255,255,255,0.10)"
+  glass-rim:    "rgba(255,255,255,0.28)"
+  bg-light:     "#f7f1e9"
+  fg-light:     "#1c100a"
+  fire-light:   "#b84010"
 typography:
   display:
-    fontFamily: "'Bebas Neue', Impact, sans-serif"
-    fontSize: "clamp(3.5rem, 10vw, 8rem)"
-    fontWeight: 400
-    lineHeight: 0.9
-    letterSpacing: "0.05em"
-  headline:
-    fontFamily: "'Bebas Neue', Impact, sans-serif"
-    fontSize: "clamp(2.5rem, 6vw, 4.5rem)"
-    fontWeight: 400
-    lineHeight: 1
-    letterSpacing: "0.04em"
-  title:
-    fontFamily: "'Syne', sans-serif"
-    fontSize: "1.1rem"
+    fontFamily: "'Bricolage Grotesque', sans-serif"
+    fontSize:   "clamp(3.5rem, 11.5vw, 9rem)"
     fontWeight: 800
-    lineHeight: 1.4
+    lineHeight: 0.88
+    letterSpacing: "-0.04em"
+  heading:
+    fontFamily: "'Bricolage Grotesque', sans-serif"
+    fontSize:   "clamp(2.6rem, 6vw, 4.5rem)"
+    fontWeight: 800
+    lineHeight: 0.96
+    letterSpacing: "-0.028em"
+  title:
+    fontFamily: "'Bricolage Grotesque', sans-serif"
+    fontSize:   "clamp(1.7rem, 3.5vw, 2.4rem)"
+    fontWeight: 700
+    lineHeight: 1.05
+    letterSpacing: "-0.02em"
   body:
     fontFamily: "'Syne', sans-serif"
-    fontSize: "0.9rem"
+    fontSize:   "1rem"
     fontWeight: 400
-    lineHeight: 1.8
+    lineHeight: 1.78
   label:
-    fontFamily: "'Space Mono', 'Courier New', monospace"
-    fontSize: "0.65rem"
+    fontFamily: "'Space Mono', monospace"
+    fontSize:   "0.68rem"
     fontWeight: 400
-    letterSpacing: "0.15em"
+    letterSpacing: "0.14em"
 rounded:
-  pill: "50px"
-  card: "24px"
-  card-sm: "14px"
-  chip: "8px"
-  benefit: "12px"
+  sm:   "8px"
+  md:   "14px"
+  lg:   "20px"
+  xl:   "28px"
+  pill: "9999px"
 spacing:
-  xs: "0.6rem"
-  sm: "1rem"
-  md: "1.5rem"
-  lg: "2rem"
-  xl: "3rem"
-  section: "6rem"
+  section:         "7rem"
+  section-mobile:  "4.5rem"
+  container-max:   "1120px"
+  container-pad:   "2rem"
 components:
-  button-primary:
-    backgroundColor: "{colors.lava-orange}"
-    textColor: "{colors.void-black}"
-    rounded: "{rounded.pill}"
-    padding: "0.75rem 2rem"
-  button-primary-hover:
-    backgroundColor: "{colors.lava-orange}"
-    textColor: "{colors.void-black}"
-  button-ghost:
-    backgroundColor: "{colors.glass-surface}"
-    textColor: "{colors.frost-white}"
-    rounded: "{rounded.pill}"
-    padding: "0.75rem 2rem"
-  button-ghost-hover:
-    backgroundColor: "{colors.glass-surface}"
-    textColor: "{colors.lava-orange}"
-  button-discord:
-    backgroundColor: "{colors.discord-blurple}"
-    textColor: "#ffffff"
-    rounded: "{rounded.pill}"
-    padding: "0.75rem 2rem"
+  btn-fire:
+    backgroundColor: "{colors.fire}"
+    textColor:       "#ffffff"
+    rounded:         "{rounded.pill}"
+    padding:         "0.8rem 1.9rem"
+  btn-fire-hover:
+    backgroundColor: "{colors.fire}"
+    textColor:       "#ffffff"
+  btn-discord:
+    backgroundColor: "{colors.discord}"
+    textColor:       "#ffffff"
+    rounded:         "{rounded.pill}"
+    padding:         "0.8rem 1.9rem"
+  btn-glass:
+    backgroundColor: "{colors.glass-fill}"
+    textColor:       "{colors.fg-primary}"
+    rounded:         "{rounded.pill}"
+    padding:         "0.8rem 1.9rem"
   card-glass:
-    backgroundColor: "{colors.glass-surface}"
-    rounded: "{rounded.card}"
-    padding: "2.5rem"
+    backgroundColor: "{colors.glass-fill}"
+    rounded:         "{rounded.xl}"
+    padding:         "2.5rem"
   member-tag-leader:
-    backgroundColor: "rgba(251,146,60,0.12)"
-    textColor: "{colors.lava-orange}"
-    rounded: "{rounded.chip}"
-    padding: "0.4rem 1rem"
+    backgroundColor: "{colors.fire}"
+    textColor:       "{colors.fire}"
+    rounded:         "{rounded.sm}"
+    padding:         "0.45rem 1.05rem"
   member-tag-member:
-    backgroundColor: "{colors.glass-surface}"
-    textColor: "{colors.frost-white}"
-    rounded: "{rounded.chip}"
-    padding: "0.4rem 1rem"
-  meta-chip:
-    backgroundColor: "rgba(255,255,255,0.06)"
-    textColor: "{colors.muted-frost}"
-    rounded: "{rounded.pill}"
-    padding: "0.3rem 0.9rem"
+    backgroundColor: "{colors.glass-fill}"
+    textColor:       "{colors.fg-primary}"
+    rounded:         "{rounded.sm}"
+    padding:         "0.45rem 1.05rem"
+  tag:
+    backgroundColor: "{colors.glass-fill}"
+    textColor:       "{colors.fg-secondary}"
+    rounded:         "{rounded.pill}"
+    padding:         "0.28rem 0.8rem"
 ---
 
-# Design System: The Highway Men
+# Design System: The Highway Men (v2)
 
-## 1. Overview
+## Overview
 
 **Creative North Star: "The Nether Grid"**
 
-The Nether is a void. Hostile by default, navigable by force of labor and organization. The Highway Men's visual system lives here: a dark, pressurized environment where every surface floats above the void behind it, every accent is heat against cold, and order is something you impose by showing up every day and moving blocks. There is nothing decorative about this system. What reads as aesthetic is a direct translation of what THM does — precision infrastructure in an environment that wants to kill you.
+The Nether is hostile by default, navigable by force of labor and organization. The Highway Men's visual system lives in that tension: a dark, pressurized environment where every surface floats above an atmospheric void, every accent carries heat, and order is something you impose by showing up every day and moving blocks. Nothing is decorative here. What reads as aesthetic is a direct translation of what THM does — precision infrastructure in an environment that wants to kill you.
 
-The glass surfaces are the Nether grid: semi-transparent layers suspended over the atmospheric background, catching light from the orange and red orbs that breathe underneath. The typography is blunt and structural — Bebas Neue was designed for weight and impact, Space Mono signals precision and technical record-keeping, and Syne bridges them with contemporary forward motion. Hierarchy is created through scale and contrast, not through decoration.
-
-This system explicitly rejects: generic gaming-clan aesthetics (cheesy HUD overlays, fantasy fonts, Roblox-energy, stock Minecraft theming), and corporate SaaS landing-page patterns (warm-neutral body backgrounds, hero-metric stat cards, "Join the waitlist" energy, decorative glassmorphism deployed without purpose). The glass here is not a trend application — it is the visual language of infrastructure that has depth and layers beneath it.
+Glass surfaces are suspended layers over a breathing atmospheric background that catches light from the fire-toned gradients beneath. Typography is editorial and structural: Bricolage Grotesque was chosen for its blunt variable-weight capability and editorial personality (replacing the clichéd Bebas Neue), Space Mono signals precision and record-keeping, and Syne bridges them. Hierarchy is created through scale and contrast, not decoration. The system explicitly rejects generic gaming-clan aesthetics (cheesy HUD overlays, neon green on black, stock fantasy fonts, Roblox-energy) and corporate SaaS landing-page patterns (cream/paper backgrounds, hero-metric stat cards, decorative glassmorphism used by reflex).
 
 **Key Characteristics:**
-- Void-black (#060a10) base — deep-space charcoal, not pure black
-- Glass surfaces as dimensional layers over the animated atmospheric background
-- Three-tier heat palette: Lava Orange (primary, CTA), Nether Red (secondary, emphasis), Volcanic Brown (tertiary, deep heat)
-- Bebas Neue for impact display, Space Mono for precision labels, Syne for readable body
-- Atmospheric motion: background orbs breathe, sections reveal on scroll, elements float
-- Pill-shaped buttons (50px radius) against the dark create floating, decisive CTAs
+- Near-black void (`#070407`) base — slightly warm tint, not pure black
+- Liquid Glass surfaces: cursor-reactive specular highlight, iridescent rim, `backdrop-filter: blur(24px) saturate(1.5)`
+- Three-tier heat palette: Fire Orange (primary CTA), Lava Red (secondary), Ember Gold (highlights)
+- Bricolage Grotesque 800 for impact display; Space Mono for precision labels; Syne for readable body
+- Dark and Light mode with saved preference; light mode is warm cream (`#f7f1e9`), not default-neutral
+- `prefers-reduced-motion` honored on all animations; content never gated on JS class triggers
 
-## 2. Colors: The Nether Heat Palette
+## Colors
 
-A void-black base with three tiers of heat, glass transparency layers, and one structural blue for Discord integration.
+A void-black base with three tiers of heat, glass transparency layers, and one structural blue for Discord.
 
 ### Primary
-- **Lava Orange** (`#fb923c`): The primary accent. Used on primary CTAs, section eyebrows, timeline dates, stat numbers, active member leader tags, and any element that demands immediate attention. At this saturation against void-black, it carries heat without aggression — it is earned, not decorative.
+- **Fire Orange** (`#e25c1c`): Primary accent. CTAs, section eyebrows, active states, stat numbers, timeline dates, leader tag borders. Carries heat without aggression at this saturation against void-black.
 
 ### Secondary
-- **Nether Red** (`#ef4444`): Secondary emphasis. Used on gradient text (hero title gradient endpoint), alliance accent borders, button gradient ends, and danger-adjacent states. It reads warmer and more urgent than Lava Orange. Never the primary CTA color.
+- **Lava Red** (`#c0391a`): Secondary emphasis. Alliance borders, deep accent states. More urgent than Fire Orange. Never the primary CTA color.
+- **Ember Gold** (`#f5a620`): Warm highlight. Theme toggle indicator, secondary glows.
 
 ### Tertiary
-- **Volcanic Brown** (`#7c2d12`): The deep heat base. Used as the terminal point of gradients, the darkest accent in the three-tier palette, and structural heat elements that need to recede. Rarely used alone.
-- **Discord Blurple** (`#5865f2`): A single-use structural color reserved exclusively for Discord CTAs. Never applied to anything unrelated to Discord. Its presence signals exactly one action: join the community.
+- **Coal** (`#3d1a0e`): Volcanic deep brown. Tag backgrounds, deep atmospheric tints. Rarely used alone.
+- **Coal Text** (`#a8684d`): Terracotta mid-tone derived from Coal. Used as text color for coal-variant tags.
+- **Discord Blurple** (`#5865F2`): Single-use structural color reserved exclusively for Discord CTAs. Never decorative.
 
 ### Neutral
-- **Void Black** (`#060a10`): The page background. Not true black — there is a faint navy tint that keeps it from feeling flat. Everything else floats above this.
-- **Frost White** (`#e2eaf5`): Primary text. Cool-tinted white; not pure white, which would be too harsh against void-black.
-- **Muted Frost** (`rgba(226,234,245,0.5)`): Secondary text, descriptions, dates, helper copy. 50% opacity of Frost White over the dark base.
-- **Glass Surface** (`rgba(255,255,255,0.07)`): The fill of glass cards and containers. Near-invisible; the background bleeds through.
-- **Glass Border** (`rgba(255,255,255,0.18)`): Standard card borders.
-- **Glass Highlight** (`rgba(255,255,255,0.25)`): The top and left edge of glass cards, creating the dimensional light-source effect.
+- **Void Black** (`#070407`): Page background. Slightly warm-tinted, not pure black. Everything floats above this.
+- **Surface** (`#100a0e`): Card/elevated surface background.
+- **Elevated** (`#180d15`): Highest surface level.
+- **Frost** (`#f0e8ec`): Primary text in dark mode. Warm-tinted white; not pure white to avoid harshness.
+- **Frost Muted** (`rgba(240,232,236,0.60)`): Secondary text, descriptions.
+- **Frost Dim** (`rgba(240,232,236,0.32)`): Tertiary, labels on dark.
+- **Glass Fill** (`rgba(255,255,255,0.045)`): Card surface with `backdrop-filter`. Near-invisible; background bleeds through.
+- **Glass Border** (`rgba(255,255,255,0.10)`): Standard card borders.
+- **Glass Rim** (`rgba(255,255,255,0.28)`): Top-edge specular rim on glass cards.
 
-### Named Rules
-**The Heat Hierarchy Rule.** Lava Orange is for action. Nether Red is for emphasis. Volcanic Brown is for atmosphere. They never swap roles. Using Nether Red on a CTA dilutes the system; using Lava Orange on a timeline event background inflates it.
+**The Heat Hierarchy Rule.** Fire Orange is for action. Lava Red is for emphasis. Ember Gold is for atmosphere. They do not swap roles.
 
-**The Discord Quarantine Rule.** Discord Blurple (#5865f2) appears only on Discord CTAs. It is structural, not decorative. Applying it anywhere else corrupts the heat palette.
+**The Discord Quarantine Rule.** Discord Blurple (`#5865F2`) appears only on Discord CTAs. Applying it anywhere else corrupts the heat palette.
 
-## 3. Typography: Blunt Precision
+**The Alpha Tint Rule.** All semi-transparent variants of brand colors are intentional system values derived from their parent token (e.g. `rgba(226,92,28,X)` from Fire, `rgba(192,57,26,X)` from Lava, `rgba(88,101,242,X)` from Discord). They are not palette drift.
 
-**Display Font:** Bebas Neue (with Impact, sans-serif fallback)
-**Body Font:** Syne (with system sans-serif fallback)
-**Label / Mono Font:** Space Mono (with Courier New, monospace fallback)
+## Typography
 
-**Character:** Bebas Neue carries blunt, unapologetic weight — a stencil-adjacent condensed display face that reads like a stencil on a shipping container. Space Mono signals technical precision and record-keeping. Syne bridges them: a geometric contemporary sans that reads well at body size and carries weight at display sizes when needed. This is not a pairing built for warmth; it is built for authority.
+**Display / Headings Font:** Bricolage Grotesque (variable, sans-serif fallback) — replaces Bebas Neue in v2 for editorial authority without the gaming-font cliché
+**Body Font:** Syne (sans-serif fallback) — geometric, contemporary, readable
+**Label/Mono Font:** Space Mono (monospace fallback) — precision, record-keeping
+
+**Character:** Bricolage Grotesque at weight 800 carries confident structural weight without feeling stencil-cheap. Space Mono signals technical precision for metadata. Syne bridges both at body size. This pairing reads as serious operation, not fan club.
 
 ### Hierarchy
-- **Display** (400 weight, `clamp(3.5rem, 10vw, 8rem)`, line-height 0.9, tracking 0.05em): Hero title only. One instance per page. The scale is deliberately exaggerated — it dominates everything below it. Apply gradient text (`linear-gradient(135deg, #fff 30%, #fb923c 70%, #ef4444)`) for the hero instance only.
-- **Headline** (400 weight, `clamp(2.5rem, 6vw, 4.5rem)`, line-height 1, tracking 0.04em): Section titles in Bebas Neue. All-caps by typeface design. One per section. Never used on sub-components.
-- **Title** (Syne, 800 weight, 1.1rem, line-height 1.4): Sub-section titles, timeline entries, card headings. Syne at maximum weight creates a clear tier between headline and body without reaching for another display face.
-- **Body** (Syne, 400 weight, 0.9–1rem, line-height 1.7–1.8): Paragraph copy. Muted Frost color by default. Cap line length at ~65ch in prose columns.
-- **Label** (Space Mono, 400 weight, 0.6–0.75rem, tracking 0.15–0.4em, all-caps): Section eyebrows, stat labels, chip text, nav links, date stamps. Uppercase tracking is a label-only technique — never apply to headings or body.
+- **Display** (800 weight, `clamp(3.5rem, 11.5vw, 9rem)`, line-height 0.88, tracking -0.04em): Hero `<h1>` only. One per page. Solid `var(--fg)` — no gradient text.
+- **Heading** (800 weight, `clamp(2.6rem, 6vw, 4.5rem)`, line-height 0.96, tracking -0.028em): Section `<h2>` titles. One per section.
+- **Title** (700 weight, `clamp(1.7rem, 3.5vw, 2.4rem)`, line-height 1.05, tracking -0.02em): Sub-sections, card headings, feature titles.
+- **Body** (Syne 400, 1rem, line-height 1.78): Paragraph copy in `var(--fg-2)`. Cap at ~62ch.
+- **Label** (Space Mono 400, 0.62–0.72rem, tracking 0.10–0.45em, all-caps): Section eyebrows, nav links, chip text, timestamps, stat labels. This is the system's metadata signal.
 
-### Named Rules
-**The Mono-Label Contract.** Space Mono is exclusively for labels, chips, dates, and navigation. Never for body prose or headings. Its uppercase-tracked treatment is a system signal: "this is metadata, not content."
+**The Gradient Ban.** Gradient text (`-webkit-background-clip: text`) is not used anywhere in this system. Solid `var(--fg)` on dark backgrounds, solid `var(--fg)` on light. Emphasis through weight and scale only.
 
-**The Gradient Ceiling.** Gradient text (`-webkit-background-clip: text`) is permitted on one element only: the hero `<h1>` display title. Nowhere else. The rule is not "use gradient text sparingly" — the rule is one instance, always the display title, end of list.
+**The Mono-Label Contract.** Space Mono is exclusively for labels, chips, dates, and navigation — never for body prose or headings.
 
-## 4. Elevation
+## Elevation
 
-This system has no traditional box shadows. Depth is conveyed entirely through the glass layer system and the animated atmospheric background beneath it.
+This system has no traditional box shadows. Depth is conveyed entirely through the Liquid Glass layer system and the animated atmospheric background beneath it.
 
-Glass surfaces achieve dimension through three simultaneous techniques: `backdrop-filter: blur(18px)` (requiring `@supports` fallback), an extremely low-opacity white fill (`rgba(255,255,255,0.07)`), and a dual-tone border that simulates a light source from the top-left (`border-top` and `border-left` use `rgba(255,255,255,0.25)` while bottom and right use `rgba(255,255,255,0.18)`). The animated background orbs (blurred radial-gradient `div`s behind the entire layout) provide the colored light source that makes the glass readable — the system is designed so glass only works because of the atmospheric layer beneath it.
+Glass surfaces achieve dimension through three simultaneous techniques: `backdrop-filter: blur(24px) saturate(1.5)` (with `@supports` fallback to an opaque surface tint), an extremely low-opacity white fill (`rgba(255,255,255,0.045)`), and a rim gradient simulating overhead light (top border at `rgba(255,255,255,0.28)`, standard edges at `rgba(255,255,255,0.10)`). A cursor-reactive specular highlight (radial gradient at `--gx`/`--gy` CSS custom properties, updated by JS on mousemove) creates the WWDC-2025-inspired Liquid Glass effect. An iridescent tint overlay (warm-to-cool gradient at `rgba(255,140,90,0.07)` → `rgba(100,160,255,0.04)`) completes the glass physics illusion.
 
-There is one context-sensitive motion effect: on hover, the `.glass-hover` class reveals a light shimmer sweep using a pseudo-element with `skewX(-15deg)` that slides from left to right. This is not a box shadow; it is a surface catch.
+The animated background (radial-gradient orbs with `ambientBreathe` animation) provides the colored light source that makes glass legible — glass without the atmospheric layer reads as plain low-contrast gray.
 
-### Named Rules
-**The Atmospheric Dependency Rule.** Glass cards depend entirely on the animated background orbs for their visual effect. Never remove or disable the background layer and expect glass to look intentional — without the warm light source behind it, the glass surface is just low-contrast gray.
+**The Atmospheric Dependency Rule.** Never disable the `.bg-canvas` layer and expect glass cards to look intentional. The glass system requires the fire-toned atmospheric layer beneath it.
 
-**The Shadow Prohibition.** `box-shadow` is not used in this system. No drop shadows, no card lift shadows. If depth is needed, it comes from the glass treatment and the background — not from painted-on shadows.
+**The No-Shadow Rule.** `box-shadow` is not used for card depth in this system. Depth comes from glass and atmosphere, not painted-on shadows.
 
-## 5. Components
+## Components
 
 ### Buttons
-Three variants, all pill-shaped (50px border-radius). The pill shape creates a strong contrast against the grid-shaped glass cards and square-ish background geometry.
+Three variants, all pill-shaped (`border-radius: 9999px`). The pill shape contrasts deliberately against rectangular glass cards and grid geometry.
 
-- **Primary:** Lava Orange (`#fb923c`) fill, Void Black text, `font-family: Space Mono`, `font-size: 0.75rem`, `letter-spacing: 0.15em`, `text-transform: uppercase`, `padding: 0.75rem 2rem`, `min-height: 44px`. Hover: `translateY(-2px)` + expanded glow `box-shadow: 0 0 50px rgba(251,146,60,0.6)`.
-- **Discord:** Discord Blurple fill, white text, same shape and type treatment as Primary. Hover: `box-shadow: 0 0 50px rgba(88,101,242,0.5)`.
-- **Ghost:** Glass surface fill, glass border, Frost White text. Hover: border shifts to Lava Orange, text shifts to Lava Orange. No fill change.
-- **All buttons:** `transition: all 0.3s`, `min-height: 44px` for accessibility, `-webkit-tap-highlight-color: transparent` for mobile.
+- **Fire (Primary):** Fire Orange fill, white text, `font: 'Space Mono' 0.70rem uppercase`, `letter-spacing: 0.13em`, `padding: 0.8rem 1.9rem`, `min-height: 46px`. Hover: `translateY(-2px)` + expanded glow `box-shadow: 0 6px 32px rgba(226,92,28,0.55)`.
+- **Discord:** Discord Blurple fill, white text, same shape/type as Fire. Hover: expanded Discord glow. Discord CTAs only.
+- **Glass (Ghost):** Glass surface fill, line-bright border, Frost text. Hover: border and text shift to Fire Orange. No fill change.
+- All: `transition: 200ms ease-out`, `min-height: 46px`, `-webkit-tap-highlight-color: transparent`.
 
-### Cards / Containers
-The glass card is the primary container. It is never nested — no card inside a card.
+### Cards / Glass Containers
+The glass card is the primary container. Never nested.
 
-- **Corner style:** 24px radius (`--card`). Sub-elements within a card use 12–14px radius.
-- **Background:** `rgba(255,255,255,0.07)` with `backdrop-filter: blur(18px)`. `@supports` fallback: `rgba(255,255,255,0.12)` (opaque).
-- **Border:** `1px solid rgba(255,255,255,0.18)` standard; `border-top-color` and `border-left-color` elevated to `rgba(255,255,255,0.25)` for the light-source effect.
-- **Internal padding:** 2.5rem (`--xl` equivalent). Tighter variants (stat cards): 1rem `0.75rem`.
-- **Hover effect:** `.glass-hover` pseudo-element shimmer sweep on `:hover`.
+- **Corner radius:** `28px` (`--r-xl`). Sub-elements within use `8–14px`.
+- **Background:** stacked `background` shorthand — (1) cursor-reactive radial specular, (2) iridescent tint linear gradient, (3) `rgba(255,255,255,0.045)` base fill. `backdrop-filter: blur(24px) saturate(1.5)`.
+- **Border:** `1px solid rgba(255,255,255,0.10)`, top edge `rgba(255,255,255,0.28)`.
+- **Hover sweep (`.glass-hover`):** pseudo-element shimmer sweeps left-to-right on `:hover`. Applied to interactive cards only, not static containers.
+- **Internal padding:** `2.5rem`. Feature cards use same scale.
+- **Light mode:** high-opacity white fill (`rgba(255,255,255,0.55)`) with near-white rim. Drop shadow: `0 2px 16px rgba(0,0,0,0.06)`.
 
-### Member Tags / Chips
-Small rectangular chips (8px radius) used for the roster display. Two semantically distinct variants:
+### Member Tags
+Small rectangular chips (`border-radius: 8px`) for the roster.
 
-- **Leader:** `background: rgba(251,146,60,0.12)`, `border: 1px solid rgba(251,146,60,0.35)`, Lava Orange text. Signals authority within the roster.
-- **Member:** Standard glass fill, glass border, Frost White text.
-- **Hover (both):** `translateY(-2px)`, border shifts to Nether Red, text shifts to Nether Red.
-- **Type:** Space Mono, 0.72rem, tracking 0.05em.
+- **Leader:** `rgba(226,92,28,0.09)` background, `rgba(226,92,28,0.35)` border, Fire Orange text. Space Mono 0.68rem.
+- **Member:** Glass fill, line-bright border, Frost text.
+- **Hover:** `translateY(-2px)`, border and text shift to Fire Orange, glow: `0 4px 16px rgba(226,92,28,0.20)`.
+- Non-linked span tags (the `& more…` entry) have no hover state.
 
-### Meta Chips
-Pill-shaped (50px) status labels used inside cards to surface metadata (maintainer, stack, status).
+### Tags / Chips
+Pill-shaped (`border-radius: 9999px`) metadata labels for card interiors.
 
-- **Default:** `background: rgba(255,255,255,0.06)`, glass border, Muted Frost text, Space Mono 0.65rem.
-- **Accent variant:** border and text shift to Lava Orange.
-- **Secondary variant:** border and text shift to Nether Red.
+- **Default:** `rgba(255,255,255,0.07)` background, line-bright border, Frost-2 text. Space Mono 0.60rem.
+- **Fire variant:** Fire-tinted border/text. **Discord variant:** Discord-tinted. **Lava variant:** Lava-tinted. **Coal variant:** Coal-tinted text (`#a8684d`).
 
 ### Navigation
-Fixed, 68px height, full-width. Glass treatment with 24px blur (heavier than card blur to anchor it above content).
+Fixed, `64px` height, full-width glass bar.
 
-- **Background:** `rgba(6,10,16,0.4)` with `backdrop-filter: blur(24px)`. On scroll past 50px: shifts to `rgba(6,10,16,0.92)` via JS.
-- **Bottom border:** `1px solid rgba(255,255,255,0.18)`.
-- **Logo:** Bebas Neue 1.6rem with THM icon. Drop shadow on icon: `drop-shadow(0 0 8px rgba(74,240,196,0.5))`.
-- **Nav links:** Space Mono, 0.75rem, tracking 0.15em, uppercase. Default: Muted Frost. Hover: Lava Orange.
-- **Mobile:** Hamburger button revealed at ≤768px. Nav links slide down from below the fixed bar (`transform: translateY(-110%)` → `translateY(0)`).
-- **Discord CTA in nav:** Discord Blurple pill button, 0.7rem, consistent with global button treatment but compact (no min-height enforcement at nav scale).
+- **Default:** transparent background. On scroll (>40px): `color-mix(in srgb, var(--bg) 82%, transparent)` + `backdrop-filter: blur(32px) saturate(1.6)` + `border-bottom: 1px solid var(--line)`.
+- **Logo:** Bricolage Grotesque 800, 1.15rem. Icon with `drop-shadow(0 0 8px rgba(226,92,28,0.50))`.
+- **Links:** Space Mono 0.68rem uppercase. Default: Frost-2. Hover: Frost + `rgba(255,255,255,0.07)` background pill. Active section: Fire Orange.
+- **Theme toggle:** Glass pill (`46×26px`). Knob slides right for light mode, glows ember-gold.
+- **Mobile ≤768px:** Hamburger reveals slide-down panel. Discord button visible in dropdown.
 
 ### Timeline
-A vertical history display using a CSS-only structure.
+Vertical infrastructure history. Conveys sequence, not just a list.
 
-- **Line:** `2px` gradient line, `position: absolute left: 20px`, gradient from Lava Orange → Nether Red → Volcanic Brown → transparent.
-- **Dots:** 18px circle, Lava Orange fill, `box-shadow: 0 0 15px rgba(74,240,196,0.6)` (teal glow — the one exception to the heat palette, carried from legacy code).
-- **Date:** Space Mono label, Lava Orange.
-- **Title:** Syne 800, 1.1rem.
-- **Body:** Syne 400, 0.88rem, Muted Frost.
+- **Spine:** `1px` gradient line (`--fire` → `--lava` → `--fire` → transparent), positioned `left: 0`.
+- **Dots:** `13px` circle, Fire border, Void bg at rest → fills Fire + glow on IntersectionObserver `.in` class.
+- **Date:** Space Mono 0.63rem uppercase, Fire Orange.
+- **Title:** Bricolage Grotesque 700, 1.15rem.
+- **Body:** Syne 400, 0.96rem, Frost-2.
 
-## 6. Do's and Don'ts
+## Do's and Don'ts
 
 ### Do:
-- **Do** use Bebas Neue for all `<h1>` and `<h2>` display headings, and Space Mono for all label/chip/nav text. These three fonts are the only permitted typefaces.
-- **Do** start every page with the animated background layer (`.bg-layer` + three `.orb` elements). The glass system is visually inert without it.
-- **Do** apply the dual-border highlight technique to all glass cards: `border-top-color` and `border-left-color` at 0.25 opacity, standard edges at 0.18.
-- **Do** size tap targets to minimum 44×44px on interactive elements (`min-height: 44px`, `min-width: 44px` for icon buttons).
-- **Do** include `@media (prefers-reduced-motion: reduce)` on every animation. Content must be fully visible without any JS-triggered class changes.
-- **Do** use `@supports (backdrop-filter: blur(1px))` guards before applying the blur treatment. The fallback (`rgba(255,255,255,0.12)`) must be declared first.
-- **Do** reserve Discord Blurple exclusively for Discord CTAs. It is a single-use structural color.
-- **Do** use `clamp()` for all display and headline font sizes to ensure they scale gracefully across viewport widths.
+- **Do** use Bricolage Grotesque 700–800 for all headings and display text. This replaced Bebas Neue in v2.
+- **Do** use Space Mono for all label, chip, nav link, eyebrow, and timestamp text. It is the system's metadata signal — not for prose.
+- **Do** start every page with `.bg-canvas` (the atmospheric gradient layer). Glass cards require it to be visible.
+- **Do** apply `backdrop-filter` with `@supports` guard. The fallback (opaque surface tint) must be declared first.
+- **Do** use the cursor-reactive specular via `--gx`/`--gy` on all `.glass` elements. This is what distinguishes this glass from generic glassmorphism.
+- **Do** respect `prefers-reduced-motion`. Every animation must have a fallback. Content must be visible without JS class triggers.
+- **Do** size all interactive tap targets to minimum `44×44px` (`min-height: 46px` on buttons).
+- **Do** include Dark and Light mode. The theme toggle must store preference in `localStorage`.
 
 ### Don't:
-- **Don't** use gradient text (`-webkit-background-clip: text`) anywhere except the hero `<h1>`. One instance in the system, total.
-- **Don't** use `box-shadow` for card depth. This system achieves depth through glass, not shadow.
-- **Don't** use warm-neutral or cream/paper/parchment backgrounds. The body background is always Void Black (`#060a10`). "Warmth" is carried by the accent palette, not the background.
-- **Don't** apply glassmorphism to non-container elements (text, icons, decorative dividers). Glass is a container treatment only.
-- **Don't** use gaming-cliché styling: no HUD overlays, no neon green, no fantasy display fonts, no pixel-art aesthetic, no literal Minecraft block textures.
-- **Don't** apply SaaS landing-page patterns: no hero-metric stat card grids, no "Join the waitlist" copy, no warm-tinted paper backgrounds, no nested glass cards.
-- **Don't** deploy the uppercase all-caps + tracking technique outside of Space Mono label contexts. Applying it to body copy or headings breaks the mono-label semantic contract.
-- **Don't** add a fourth accent color without retiring one. The Lava Orange / Nether Red / Volcanic Brown triad is complete. New colors corrupt the heat system.
-- **Don't** use border-left stripes as colored accents on cards. The Watchmen alliance card uses a left border by exception (it signals alliance, not THM membership) — this is not a general pattern.
-- **Don't** gate any content visibility on a JavaScript-triggered class. Every section must render fully visible in the HTML; transitions enhance, they don't reveal.
+- **Don't** use gradient text (`-webkit-background-clip: text` with a gradient). Solid `var(--fg)` only. This is an AI visual tell and was explicitly removed from v2.
+- **Don't** use `box-shadow` for card depth. Depth comes from glass and the atmospheric layer.
+- **Don't** use Bebas Neue. It was replaced by Bricolage Grotesque.
+- **Don't** add a fourth accent color. The Fire / Lava / Ember triad is complete; additions corrupt the heat system.
+- **Don't** use cream, sand, paper, or parchment as a body background in light mode. The light mode bg is `#f7f1e9` — warm cream — which is intentional brand warmth, not the default AI neutral-background move.
+- **Don't** apply glassmorphism decoratively. Every `.glass` element must have purposeful content or structural role.
+- **Don't** use generic gaming-clan aesthetics: no HUD overlays, no neon green on black, no pixel-art, no literal Minecraft block textures.
+- **Don't** use SaaS landing-page patterns: no hero-metric stat-card grids (the stat bar in the hero is a unified strip, not individual cards), no "join the waitlist" copy, no decorative glassmorphism by reflex.
+- **Don't** nest glass cards. One level only.
+- **Don't** use `--ease-spring` (removed from v2). Physical toggles may use a minimal overshoot inline; all other transitions use `--ease-out: cubic-bezier(0.22, 1, 0.36, 1)`.

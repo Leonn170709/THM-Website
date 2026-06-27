@@ -3,10 +3,23 @@ process.env.NODE_ENV = 'production';
 
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const app = express();
 
 // Configuration constants
 const PORT = 3002;
+const STATS_FILE = path.join(__dirname, 'public', 'stats.json');
+
+// Live stats endpoint — Cache-Control: no-store prevents Cloudflare from caching it
+app.get('/api/stats', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+  try {
+    const stats = JSON.parse(fs.readFileSync(STATS_FILE, 'utf8'));
+    res.json(stats);
+  } catch {
+    res.status(503).json({ error: 'stats unavailable' });
+  }
+});
 
 // Serve all static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
