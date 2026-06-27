@@ -1,0 +1,49 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-color",
+        "value": "rgba(153, 27, 27, 0.18)",
+        "reason": "Atmospheric background orb, intentional darker volcanic-brown variant",
+        "createdAt": "2026-06-26T23:20:38.678Z"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "2px",
+        "reason": "Hamburger bar and scroll-mouse shapes, intentional UI micro-geometry",
+        "createdAt": "2026-06-26T23:20:38.724Z"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "10px",
+        "reason": "Scroll-mouse border-radius, intentional pill shape",
+        "createdAt": "2026-06-26T23:20:38.769Z"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "4px",
+        "reason": "Focus-visible outline border-radius, standard keyboard focus indicator shape",
+        "createdAt": "2026-06-26T23:20:53.697Z"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "6px",
+        "reason": "Nav link focus-visible border-radius, intentional focus indicator shape",
+        "createdAt": "2026-06-26T23:20:53.736Z"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(153, 27, 27, 0.24)",
+        "createdAt": "2026-06-26T23:45:12.876Z"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#a5b4fc",
+        "reason": "Light Discord-blue variant for dev badge and purple chip text; readable on dark glass where #5865F2 is borderline",
+        "createdAt": "2026-06-27T00:09:02.518Z"
+      }
+    ]
+  }
+}
