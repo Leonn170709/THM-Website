@@ -1,0 +1,164 @@
+THM WEBSITE DESIGN SYSTEM
+=========================
+
+WHAT THIS SITE IS
+-----------------
+Clan landing page for The Highway Men (THM), a Minecraft anarchy-server
+highway-building clan on 6b6t. Dark, industrial, Nether-fire aesthetic.
+Single-page site with per-member profile sub-pages.
+
+
+DESIGN AESTHETIC
+----------------
+- Mood: Dark industrial / Nether infrastructure. Not gaming-generic — more
+  like a serious org's site.
+- Palette feel: Near-black background with lava-orange as the sole accent,
+  ember glow effects, deep coal browns for secondary UI. Discord purple used
+  only for Discord-specific CTAs.
+- No gradients on text, no rainbow UI, no saturated hero backgrounds —
+  restraint is intentional.
+
+
+COLOR TOKENS (CSS custom properties)
+-------------------------------------
+Dark mode (default):
+
+  --bg          #070407                      Page background
+  --bg-1        #100a0e                      Slightly lifted surface
+  --bg-2        #180d15                      Card backgrounds
+  --fg          #f0e8ec                      Primary text
+  --fg-2        rgba(240,232,236,0.60)       Body copy, muted labels
+  --fg-3        rgba(240,232,236,0.32)       Placeholder, hint text
+  --fire        #e25c1c                      Primary accent — interactive highlights, labels, stats
+  --lava        #c0391a                      Deeper red-orange — timeline, secondary accents
+  --ember       #f5a620                      Warm amber — theme knob gradient
+  --coal        #3d1a0e                      Deep brown chip background
+  --coal-text   #a8684d                      Coal-colored text (disbanded tag)
+  --discord     #5865F2                      Discord button/tag only
+  --glass       rgba(255,255,255,0.045)      Glass card fill
+  --glass-border rgba(255,255,255,0.10)      Glass card border
+  --glass-top   rgba(255,255,255,0.28)       Top highlight on glass cards
+  --line        rgba(255,255,255,0.07)       Dividers, cell borders
+  --line-bright rgba(255,255,255,0.14)       Stronger dividers, button borders
+
+Light mode (html[data-theme="light"]):
+  Warm parchment background (#f7f1e9), dark warm-brown text (#1c100a), same
+  fire/lava tokens but slightly muted. Glass becomes opaque white-ish.
+  Theme togglable via nav toggle (dark=fire knob, light=amber knob shifts right).
+
+
+TYPOGRAPHY
+----------
+Role                    Font                  Weight   Notes
+Display / hero title    Bricolage Grotesque   800      line-height 0.88-0.96, letter-spacing -0.04em
+Section headings        Bricolage Grotesque   700-800  clamp(2.6rem, 6vw, 4.5rem)
+Body copy               Syne                  400-600  line-height 1.65-1.85, letter-spacing 0.01em
+Labels / mono / nav     Space Mono            400-700  0.58-0.72rem, letter-spacing 0.11-0.48em, uppercase
+
+Google Fonts: Bricolage Grotesque (display), Space Mono (labels/mono), Syne (body).
+
+NOTE: CLAUDE.md references old fonts (Bebas Neue, Space Mono, Syne) — the
+actual codebase uses Bricolage Grotesque instead of Bebas Neue. Trust the
+CSS, not CLAUDE.md.
+
+
+GLASS EFFECT
+------------
+.glass uses backdrop-filter: blur(24px) saturate(1.5) with a cursor-reactive
+radial specular highlight (--gx/--gy CSS vars updated by JS). Also has a
+subtle diagonal gradient overlay (warm orange -> cool blue -> transparent).
+
+.glass-hover adds lift on hover.
+
+Fallback (no backdrop-filter support): color-mix(in srgb, var(--bg-1) 88%, transparent).
+
+
+LAYOUT
+------
+- max-width: 1120px centered container, padding-inline: 2rem (1.25rem mobile)
+- Fixed nav 64px tall (--nav-h)
+- Sections: padding-block: 7rem (4.5rem mobile)
+- Large decorative section numbers via ::before content: attr(data-n) in
+  --fire at ~4% opacity
+
+
+COMPONENTS
+----------
+Buttons — 3 variants, all pill-shaped (border-radius: 9999px), Space Mono,
+letter-spacing 0.13em, uppercase:
+  .btn-fire    — solid lava-orange, glow shadow, lifts -2px on hover
+  .btn-discord — solid Discord purple
+  .btn-glass   — glass fill, border turns fire-orange on hover
+
+Section labels (.section-label) — Space Mono, tiny, letter-spacing 0.42em,
+color var(--fire). Trailing ::after line fades right in fire color.
+
+Tags / chips — pill-shaped inline tags:
+  .tag.fire    — orange tint border/bg/text
+  .tag.lava    — red tint
+  .tag.discord — purple tint
+  .tag.coal    — dark brown tint
+  default      — neutral glass
+
+Timeline — vertical gradient line (transparent -> fire -> lava -> fire ->
+transparent). Dots fill solid fire on scroll (.in class).
+
+Member grid — flex-wrapped tags, glass background, Space Mono font. Leaders
+have fire-orange border/color. Hover lifts + glows fire.
+
+Profile pages — 2-col grid (content left, sticky skin panel right). Skin
+panel has a canvas with draggable 3D Minecraft skin renderer. Profile has
+breadcrumb nav, role badges, facts table, wiki sections, achievement list,
+stat table.
+
+
+ANIMATIONS
+----------
+.reveal elements     fade up from translateY(22px) via IntersectionObserver
+                     -> .visible. Stagger via .d1-.d4 delay classes.
+Hero elements        sequential fadeUp keyframes (0.25s -> 1.7s chain)
+Banner               bannerReveal — fade + subtle scale
+Kitbot icon          floatIcon — 5s sine float
+Scroll wheel         scrollWheel — drip down and reset
+Background orbs      ambientBreathe — 12s pulse 55%-100% opacity
+prefers-reduced-motion collapses all to instant
+
+
+BACKGROUND
+----------
+Fixed .bg-canvas with three radial gradients (lava glow top-center, ember
+bottom-left, coal bottom-right). Plus SVG noise texture at opacity 0.020.
+Subtle ambientBreathe pulse.
+
+Hero additionally has a perspective CSS grid (rotateX 70deg) and a
+vanishing-point ellipse glow.
+
+
+SECTIONS (page order)
+----------------------
+1.  Hero          — banner image, title, stats strip, 3 CTAs, scroll cue
+2.  About         — prose + emblem, data-n="01"
+3.  Join CTA      — centered glass card
+4.  History       — timeline, data-n="02"
+5.  Highways      — map image with "Updated:" badge, data-n="03"
+6.  Kitbot        — feature card with floating icon
+7.  5 Blocks Wide — numeral card with benefits grid
+8.  Alliances     — The Watchmen coalition card, disbanded tag
+9.  Members       — legend + flex grid of member tags, data-n="04"
+10. Footer        — mono text, leader credits
+
+
+FILES
+-----
+public/css/thm.css                  — entire design system
+public/index.html                   — main page
+public/players/<Name>/index.html    — per-member profile pages, same CSS
+public/js/thm.js                    — scroll reveal, glass cursor, nav, stats
+
+
+DO NOT CHANGE WITHOUT ASKING
+-----------------------------
+- The fire/lava/coal palette — intentional and consistent throughout
+- Font stack — Bricolage + Space Mono + Syne is the established trio
+- Glass treatment — cursor-reactive specular is a deliberate detail
+- Dark mode as default — light mode is a toggle, not primary
